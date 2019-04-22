@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+	<session-factory>
+
+		<!-- Conexão com o BD -->
+		<property name="connection.driver_class">org.postgresql.Driver</property>
+		<property name="connection.url">jdbc:postgresql://127.0.0.1:5432/teste</property>
+		<property name="connection.username">postgres</property>
+		<property name="connection.password">bd0404</property>
+
+		<!-- Pool de Conexões -->
+		<property name="connection.pool_size">1</property>
+
+		<!-- SQL dialect -->
+		<property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+
+		<!-- Gerenciamneto de contexto das sessões -->
+		<property name="current_session_context_class">thread</property>
+
+		<!-- Cache de segundo nível -->
+		<property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
+
+		<!-- Mostra as SQLs geradas -->
+		<property name="show_sql">true</property>
+
+		<!-- Cria as tabelas do BD -->
+		<property name="hbm2ddl.auto">validate</property>
+
+		<property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
+		
+		
+		<mapping class="br.edu.ifpe.pizzaria.model.domain.Usuario" />
+		<mapping class="br.edu.ifpe.pizzaria.model.domain.Cliente" />
+		<mapping class="br.edu.ifpe.pizzaria.model.domain.Funcionario" />
+		<mapping class="br.edu.ifpe.pizzaria.model.domain.Bebida" />
+		<mapping class="br.edu.ifpe.pizzaria.model.domain.Pedido" />
+		<mapping class="br.edu.ifpe.pizzaria.model.domain.PedidoBebida" />
+		<mapping class="br.edu.ifpe.pizzaria.model.domain.PedidoPizza" />
+		<mapping class="br.edu.ifpe.pizzaria.model.domain.Pizza" />
+		<mapping class="br.edu.ifpe.pizzaria.model.domain.Telefone" />
+		
+
+	</session-factory>
+
+</hibernate-configuration>
