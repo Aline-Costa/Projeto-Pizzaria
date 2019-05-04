@@ -1,47 +1,136 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-<h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Cliente</title>
-</h:head>
-<h:body>
-	<p:growl id="mensagem"/>
-	<h:form>
-		<p:panel header="Clientes - Listagem">
-			<p:dataTable emptyMessage="Nenhum registro encontrado."
-				paginator="true">
-				<f:facet name="footer">
-					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();" />
-				</f:facet>
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
+
+	<ui:define name="conteudo">
+
+		<h:form id="formListagem">
+			<p:panel header="Clientes - Listagem">
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+					paginator="true" value="#{clienteBean.clientes}" var="cliente"
+					rows="5" paginatorPosition="bottom">
+					<f:facet name="footer">
+						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
+							actionListener="#{clienteBean.novo}"
+							update=":formCadastro:painel">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</f:facet>
+
+					<p:column headerText="Nome" sortBy="#{cliente.nome}"
+						filterBy="#{cliente.nome}">
+						<h:outputText value="#{cliente.nome}" />
+					</p:column>
+
+					<p:column headerText="Rua">
+						<h:outputText value="#{cliente.rua}" />
+					</p:column>
+
+					<p:column headerText="Nº">
+						<h:outputText value="#{cliente.numCasa}" />
+					</p:column>
+
+					<p:column headerText="Bairro">
+						<h:outputText value="#{cliente.bairro}" />
+					</p:column>
+
+					<p:column headerText="Telefone">
+						<h:outputText value="#{cliente.telefone}" />
+					</p:column>
+
+					<p:column headerText="E-mail">
+						<h:outputText value="#{cliente.email}" />
+					</p:column>
+
+					<p:column headerText="Senha">
+						<h:outputText value="#{cliente.senha}" />
+					</p:column>
 
 
-				<p:column headerText="Usuário">
-				</p:column>
+					<p:column headerText="Opções">
+						<p:commandButton icon="ui-icon-trash"
+							actionListener="#{clienteBean.excluir}"
+							update=":mensagem :formListagem:tabela">
+							<p:confirm header="Confirmação"
+								message="Deseja excluir o cliente?"
+								icon="pi pi-exclamation-triangle" />
+							<f:attribute name="clienteSelecionado" value="#{cliente}" />
+						</p:commandButton>
+						<p:commandButton icon="ui-icon-pencil"
+							actionListener="#{clienteBean.editar}"
+							update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
+							<f:attribute name="clienteSelecionado" value="#{cliente}" />
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</p:column>
 
-			</p:dataTable>
-		</p:panel>
-	</h:form>
-
-	<p:dialog header="Clientes - Cadastro" widgetVar="dialogo"
-		draggable="false" resizable="false" modal="true">
-		<h:form>
-			<h:panelGrid columns="2">
-
-				<p:outputLabel value="Cliente" />
-				<p:selectOneMenu filter="true">
-				<f:selectItem itemValue="" itemLabel="Selecione um usuário"/>
-				</p:selectOneMenu>
-			</h:panelGrid>
-			
-			<h:panelGrid columns="2">
-				<p:commandButton value="Salvar" />
-				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();"/>
-			</h:panelGrid>
+				</p:dataTable>
+				<p:confirmDialog global="true">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+				</p:confirmDialog>
+			</p:panel>
 		</h:form>
-	</p:dialog>
-</h:body>
-</html>
+
+		<p:dialog header="Clientes - Cadastro" widgetVar="dialogo"
+			draggable="false" resizable="false" modal="false">
+			<h:form id="formCadastro">
+				<h:panelGrid id="painel" columns="2">
+
+					<p:outputLabel value="Nome:" />
+					<p:inputText maxlength="100" size="30"
+						value="#{clienteBean.cliente.nome}" required="true"
+						requiredMessage="O campo 'Nome' é obrigatório!" />
+
+					<p:outputLabel value="Rua:" />
+					<p:inputText maxlength="50" size="30"
+						value="#{clienteBean.cliente.rua}" required="true"
+						requiredMessage="O campo 'Rua' é obrigatório!" />
+
+					<p:outputLabel value="Nº da casa:" />
+					<p:inputText maxlength="10" size="15"
+						value="#{clienteBean.cliente.numCasa}" required="true"
+						requiredMessage="O campo 'Nº da casa' é obrigatório!" />
+
+					<p:outputLabel value="Bairro:" />
+					<p:inputText maxlength="50" size="30"
+						value="#{clienteBean.cliente.bairro}" required="true"
+						requiredMessage="O campo 'Bairro' é obrigatório!" />
+
+					<p:outputLabel value="Telefone:" />
+					<p:inputMask id="telefone" mask="(99)99999-9999" maxlength="14"
+						size="16" value="#{clienteBean.cliente.telefone}" required="true"
+						requiredMessage="O campo 'Telefone' é obrigatório!" />
+
+					<p:outputLabel value="E-mail:" />
+					<p:inputText maxlength="50" size="30"
+						value="#{clienteBean.cliente.email}" required="true"
+						requiredMessage="O campo 'E-mail' é obrigatório!" />
+
+					<p:outputLabel value="Senha:" />
+					<p:password maxlength="8" size="10"
+						value="#{clienteBean.cliente.senha}" required="true"
+						requiredMessage="O campo 'Senha' é obrigatório!" />
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{clienteBean.salvar}"
+						update=":mensagem :formCadastro:painel :formListagem:tabela" />
+					<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+
+</ui:composition>

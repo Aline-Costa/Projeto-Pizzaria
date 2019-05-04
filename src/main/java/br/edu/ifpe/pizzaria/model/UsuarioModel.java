@@ -16,7 +16,8 @@ public class UsuarioModel {
 	public void registrarUsuario(Usuario u) {
 		try {
 			if (u.getBairro() != null && u.getEmail() != null && u.getLogin() != null && u.getNome() != null
-					&& u.getNumCasa() != null && u.getRua() != null && u.getSenha() != null && !this.existeLogin(u.getLogin()) && !this.existeEmail(u.getEmail())) {
+					&& u.getNumCasa() != null && u.getRua() != null && u.getSenha() != null
+					&& !this.existeLogin(u.getLogin()) && !this.existeEmail(u.getEmail())) {
 				dao.salvar(u);
 				System.out.println("Usuário salvo com sucesso!.");
 			}
@@ -25,7 +26,7 @@ public class UsuarioModel {
 			System.out.println("Erro ao salvar usuário." + e);
 		}
 	}
-	
+
 	private boolean existeLogin(String login) {
 		boolean ret = false;
 		for (Usuario u : usuarios) {
@@ -36,7 +37,7 @@ public class UsuarioModel {
 		}
 		return ret;
 	}
-	
+
 	private boolean existeEmail(String email) {
 		boolean ret = false;
 		for (Usuario u : usuarios) {
@@ -91,7 +92,7 @@ public class UsuarioModel {
 			System.out.println("Usuário não encontrado!" + e);
 		}
 	}
-	
+
 	public void listarUsuario() {
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		List<Usuario> resultado = usuarioDAO.listar();

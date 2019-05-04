@@ -1,71 +1,131 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-<h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Pedidos</title>
-</h:head>
-<h:body>
-	<h:form>
-		<p:panel header="Pedidos - Listagem">
-			<p:dataTable emptyMessage="Nenhum registro encontrado."
-				paginator="true">
-				<f:facet name="footer">
-					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();" />
-				</f:facet>
-				
-				<p:column headerText="Código Cliente">
-				</p:column>
-				<p:column headerText="Data">
-				</p:column>
-				<p:column headerText="Status">
-				</p:column>
-				<p:column headerText="Pagamento">
-				</p:column>
-				<p:column headerText="Valor Total">
-				</p:column>
-				
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
 
-			</p:dataTable>
-		</p:panel>
-	</h:form>
 
-	<p:dialog header="Pedidos - Cadastro" widgetVar="dialogo"
-		draggable="false" resizable="false" modal="true">
-		<h:form>
-			<h:panelGrid columns="2">
+	<ui:define name="conteudo">
+		<h:form id="formulario">
+			<p:panel header="Pizzas">
+				<p:dataTable id="tabelaPizza"
+					emptyMessage="Nenhum registro encontrado." paginator="true"
+					value="#{pedidoBean.pizzas}" var="pizza" rows="4"
+					paginatorPosition="bottom">
 
-				<p:outputLabel value="Cliente" />
-				<p:selectOneMenu filter="true">
-				<f:selectItem itemValue="" itemLabel="Selecione um usuário"/>
-				</p:selectOneMenu>
-				
-				<p:outputLabel value="Data:" />
-				<p:calendar />
-				
-				<p:outputLabel value="Valor Total:" />
-				<p:inputText maxlength="8" size="10" />
-				
-				<p:outputLabel value="Status:" />
-				<p:selectOneRadio>
-					<f:selectItem itemValue= "" itemLabel="Aberto"/>
-					<f:selectItem itemValue= "" itemLabel="Em preparo"/>
-					<f:selectItem itemValue= "" itemLabel="Saiu para entrega"/>
-					<f:selectItem itemValue= "" itemLabel="Entregue"/>	
-				</p:selectOneRadio>
-				
-				<p:outputLabel value="Pagamento:" />
-				<p:inputText maxlength="30" size="30" />
-			</h:panelGrid>
-			
-			<h:panelGrid columns="2">
-				<p:commandButton value="Salvar" />
-				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();"/>
-			</h:panelGrid>
+					<p:column headerText="Nome" sortBy="#{pizza.nome}"
+						filterBy="#{pizza.nome}">
+						<h:outputText value="#{pizza.nome}" />
+					</p:column>
+					<p:column headerText="Descrição">
+						<h:outputText value="#{pizza.descricao}" />
+					</p:column>
+					<p:column headerText="Tamanho">
+						<h:outputText value="#{pizza.tamanho}" />
+					</p:column>
+					<p:column headerText="Preço">
+						<h:outputText value="#{pizza.preco}">
+							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Opções">
+						<p:commandButton icon="ui-icon-plus"
+							actionListener="#{pedidoBean.adicionar}"
+							update=":formulario:tabelaCesta :formulario:painelFinalizacao">
+							<f:attribute name="pizzaSelecionada" value="#{pizza}" />
+
+						</p:commandButton>
+
+
+					</p:column>
+
+				</p:dataTable>
+			</p:panel>
+
+			<p:panel header="Cesta de Compras">
+
+				<p:dataTable id="tabelaCesta"
+					emptyMessage="Nenhum registro encontrado." paginator="true"
+					value="#{pedidoBean.pedidosPizzas}" var="pedidoPizza" rows="4"
+					paginatorPosition="bottom">
+
+					<p:column headerText="Nome" sortBy="#{pizza.nome}"
+						filterBy="#{pizza.nome}">
+						<h:outputText value="#{pedidoPizza.pizza.nome}" />
+					</p:column>
+					<p:column headerText="Descrição">
+						<h:outputText value="#{pedidoPizza.pizza.descricao}" />
+					</p:column>
+					<p:column headerText="Tamanho">
+						<h:outputText value="#{pedidoPizza.pizza.tamanho}" />
+					</p:column>
+					<p:column headerText="Preço Un.">
+						<h:outputText value="#{pedidoPizza.pizza.preco}">
+							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Qtd">
+						<h:outputText value="#{pedidoPizza.qtd}" />
+					</p:column>
+
+					<p:column headerText="Preço Parcial.">
+						<h:outputText value="#{pedidoPizza.preco}">
+							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Opções">
+						<p:commandButton icon="ui-icon-minus"
+							actionListener="#{pedidoBean.remover}"
+							update=":formulario:tabelaCesta :formulario:painelFinalizacao">
+							<f:attribute name="pedidoSelecionado" value="#{pedidoPizza}" />
+
+						</p:commandButton>
+
+					</p:column>
+
+				</p:dataTable>
+			</p:panel>
+
+			<p:panel header="Finalização do pedido">
+				<h:panelGrid id="painelFinalizacao" columns="3">
+					<p:outputLabel value="Total:" />
+					<h:outputText value="#{pedidoBean.pedido.valorTotal}">
+						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+					</h:outputText>
+					<p:commandButton value="Finalizar"
+						actionListener="#{pedidoBean.finalizar}"
+						update=":mensagem :formularioFinalizar:painelFinalizar"
+						oncomplete="PF('dialogo').show();" />
+				</h:panelGrid>
+			</p:panel>
 		</h:form>
-	</p:dialog>
-</h:body>
-</html>
+
+		<p:dialog header="Finalizar Pedido" widgetVar="dialogo"
+			draggable="false" resizable="false" modal="false">
+			<h:form id="formularioFinalizar">
+
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Cliente:" />
+					<p:selectOneMenu value="#{pedidoBean.pedido.codCliente}"
+						converter="omnifaces.SelectItemsConverter" filter="true">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione um cliente:" />
+						<f:selectItems value="#{pedidoBean.clientes}" var="cliente"
+							itemValue="#{cliente}" itemLabel="#{cliente.nome}" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+				<h:panelGrid id="painelFinalizar" columns="2">
+					<p:commandButton value="Salvar" />
+					<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+
+</ui:composition>

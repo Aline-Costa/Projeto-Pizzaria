@@ -34,7 +34,6 @@
 		<property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
 		
 		
-		<mapping class="br.edu.ifpe.pizzaria.model.domain.Usuario" />
 		<mapping class="br.edu.ifpe.pizzaria.model.domain.Cliente" />
 		<mapping class="br.edu.ifpe.pizzaria.model.domain.Funcionario" />
 		<mapping class="br.edu.ifpe.pizzaria.model.domain.Bebida" />
@@ -42,7 +41,7 @@
 		<mapping class="br.edu.ifpe.pizzaria.model.domain.PedidoBebida" />
 		<mapping class="br.edu.ifpe.pizzaria.model.domain.PedidoPizza" />
 		<mapping class="br.edu.ifpe.pizzaria.model.domain.Pizza" />
-		<mapping class="br.edu.ifpe.pizzaria.model.domain.Telefone" />
+		
 		
 
 	</session-factory>

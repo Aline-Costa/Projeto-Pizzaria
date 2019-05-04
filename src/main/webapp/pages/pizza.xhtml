@@ -1,99 +1,108 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-<h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Pizzas</title>
-</h:head>
-<h:body>
-	<p:growl id="mensagem" />
-	<h:form id="formListagem">
-		<p:panel header="Pizzas - Listagem">
-			<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
-				paginator="true" value="#{pizzaBean.pizzas}" var="pizza">
-				<f:facet name="footer">
-					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
-						actionListener="#{pizzaBean.novo}" update=":formCadastro:painel">
-						<f:actionListener
-							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-					</p:commandButton>
-				</f:facet>
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
 
-				<p:column headerText="Nome" sortBy="#{pizza.nome}"
-					filterBy="#{pizza.nome}">
-					<h:outputText value="#{pizza.nome}" />
-				</p:column>
-				<p:column headerText="Descrição">
-					<h:outputText value="#{pizza.descricao}" />
-				</p:column>
-				<p:column headerText="Tamanho">
-					<h:outputText value="#{pizza.tamanho}" />
-				</p:column>
-				<p:column headerText="Preço">
-					<h:outputText value="#{pizza.preco}" />
-				</p:column>
+	<ui:define name="conteudo">
 
-				<p:column headerText="Opções">
-					<p:commandButton icon="ui-icon-trash"
-						actionListener="#{pizzaBean.excluir}"
-						update=":mensagem :formListagem:tabela">
-						<p:confirm header="Confirmação" message="Deseja excluir a pizza?"
-							icon="pi pi-exclamation-triangle" />
-						<f:attribute name="pizzaSelecionada" value="#{pizza}" />
-					</p:commandButton>
-					<p:commandButton icon="ui-icon-pencil"
-						actionListener="#{pizzaBean.editar}" update=":formCadastro:painel"
-						oncomplete="PF('dialogo').show();">
-						<f:attribute name="pizzaSelecionada" value="#{pizza}" />
-						<f:actionListener
-							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-					</p:commandButton>
-				</p:column>
+		<h:form id="formListagem">
+			<p:panel header="Pizzas - Listagem">
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+					paginator="true" value="#{pizzaBean.pizzas}" var="pizza" paginatorPosition="bottom">
+					<f:facet name="footer">
+						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
+							actionListener="#{pizzaBean.novo}" update=":formCadastro:painel">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</f:facet>
 
-			</p:dataTable>
-			<p:confirmDialog global="true">
-				<p:commandButton value="Sim" type="button"
-					styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
-				<p:commandButton value="Não" type="button"
-					styleClass="ui-confirmdialog-no" icon="pi pi-times" />
-			</p:confirmDialog>
-		</p:panel>
-	</h:form>
+					<p:column headerText="Nome" sortBy="#{pizza.nome}"
+						filterBy="#{pizza.nome}">
+						<h:outputText value="#{pizza.nome}" />
+					</p:column>
+					<p:column headerText="Descrição">
+						<h:outputText value="#{pizza.descricao}" />
+					</p:column>
+					<p:column headerText="Tamanho">
+						<h:outputText value="#{pizza.tamanho}" />
+					</p:column>
+					<p:column headerText="Preço">
+						<h:outputText value="#{pizza.preco}">
+							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+						</h:outputText>
+					</p:column>
 
-	<p:dialog header="Pizzas - Cadastro" widgetVar="dialogo"
-		draggable="false" resizable="false" modal="true">
-		<h:form id="formCadastro">
-			<h:panelGrid id="painel" columns="2">
-				<p:outputLabel value="Nome:" />
-				<p:inputText maxlength="50" size="30"
-					value="#{pizzaBean.pizza.nome}" required="true"
-					requiredMessage="O campo 'Nome' é obrigatório!" />
+					<p:column headerText="Opções">
+						<p:commandButton icon="ui-icon-trash"
+							actionListener="#{pizzaBean.excluir}"
+							update=":mensagem :formListagem:tabela">
+							<p:confirm header="Confirmação" message="Deseja excluir a pizza?"
+								icon="pi pi-exclamation-triangle" />
+							<f:attribute name="pizzaSelecionada" value="#{pizza}" />
+						</p:commandButton>
+						<p:commandButton icon="ui-icon-pencil"
+							actionListener="#{pizzaBean.editar}"
+							update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
+							<f:attribute name="pizzaSelecionada" value="#{pizza}" />
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</p:column>
 
-				<p:outputLabel value="Descrição:" />
-				<p:inputText maxlength="200" size="30"
-					value="#{pizzaBean.pizza.descricao}" required="true"
-					requiredMessage="O campo 'Descrição' é obrigatório!" />
-
-				<p:outputLabel value="Tamanho:" />
-				<p:inputText maxlength="10" size="30"
-					value="#{pizzaBean.pizza.tamanho}" required="true"
-					requiredMessage="O campo 'Tamanho' é obrigatório!" />
-
-				<p:outputLabel value="Preço:" />
-				<p:inputText maxlength="8" size="10"
-					value="#{pizzaBean.pizza.preco}" required="true"
-					requiredMessage="O campo 'Preço' é obrigatório!" />
-			</h:panelGrid>
-
-			<h:panelGrid columns="2">
-				<p:commandButton value="Salvar" actionListener="#{pizzaBean.salvar}"
-					update=":mensagem :formCadastro:painel :formListagem:tabela " />
-				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
-			</h:panelGrid>
+				</p:dataTable>
+				<p:confirmDialog global="true">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+				</p:confirmDialog>
+			</p:panel>
 		</h:form>
-	</p:dialog>
-</h:body>
-</html>
+
+		<p:dialog header="Pizzas - Cadastro" widgetVar="dialogo"
+			draggable="false" resizable="false" modal="false">
+			<h:form id="formCadastro">
+				<h:panelGrid id="painel" columns="2">
+					<p:outputLabel value="Nome:" />
+					<p:inputText maxlength="50" size="30"
+						value="#{pizzaBean.pizza.nome}" required="true"
+						requiredMessage="O campo 'Nome' é obrigatório!" />
+
+					<p:outputLabel value="Descrição:" />
+					<p:inputText maxlength="200" size="30"
+						value="#{pizzaBean.pizza.descricao}" required="true"
+						requiredMessage="O campo 'Descrição' é obrigatório!" />
+
+					<p:outputLabel value="Tamanho:" />
+					<p:inputText maxlength="10" size="30"
+						value="#{pizzaBean.pizza.tamanho}" required="true"
+						requiredMessage="O campo 'Tamanho' é obrigatório!" />
+
+					<p:outputLabel value="Preço:" />
+					<p:inputText maxlength="8" size="10"
+						value="#{pizzaBean.pizza.preco}" required="true"
+						requiredMessage="O campo 'Preço' é obrigatório!"
+						converterMessage="O valor informado no campo 'Preço' é inválido!"
+						validatorMessage="O valor informado no campo 'Preço' é inválido! Informe um valor entre 0.01 e 100.00">
+						<f:validateDoubleRange minimum="0.01" maximum="100.00" />
+						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+
+					</p:inputText>
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{pizzaBean.salvar}"
+						update=":mensagem :formCadastro:painel :formListagem:tabela " />
+					<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+
+</ui:composition>

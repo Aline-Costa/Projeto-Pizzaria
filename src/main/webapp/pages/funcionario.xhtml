@@ -1,49 +1,107 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-<h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Funcionário</title>
-</h:head>
-<h:body>
-	<h:form>
-		<p:panel header="Funcionários - Listagem">
-			<p:dataTable emptyMessage="Nenhum registro encontrado."
-				paginator="true">
-				<f:facet name="footer">
-					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();" />
-				</f:facet>
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
 
-				<p:column headerText="Função">
-				</p:column>
-				<p:column headerText="Usuário">
-				</p:column>
+	<ui:define name="conteudo">
+		<h:form id="formListagem">
+			<p:panel header="Funcionários - Listagem">
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+					paginator="true" value="#{funcionarioBean.funcionarios}"
+					var="funcionario" rows="5" paginatorPosition="bottom">
+					<f:facet name="footer">
+						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
+							actionListener="#{funcionarioBean.novo}"
+							update=":formCadastro:painel">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</f:facet>
 
-			</p:dataTable>
-		</p:panel>
-	</h:form>
+					<p:column headerText="Nome" sortBy="#{funcionario.nome}"
+						filterBy="#{funcionario.nome}">
+						<h:outputText value="#{funcionario.nome}" />
+					</p:column>
 
-	<p:dialog header="Funcionários - Cadastro" widgetVar="dialogo"
-		draggable="false" resizable="false" modal="true">
-		<h:form>
-			<h:panelGrid columns="2">
-				<p:outputLabel value="Função:" />
-				<p:inputText maxlength="100" size="30" />
+					<p:column headerText="Função">
+						<h:outputText value="#{funcionario.funcao}" />
+					</p:column>
 
-				<p:outputLabel value="Funcionário" />
-				<p:selectOneMenu filter="true">
-				<f:selectItem itemValue="" itemLabel="Selecione um usuário"/>
-				</p:selectOneMenu>
-			</h:panelGrid>
-			
-			<h:panelGrid columns="2">
-				<p:commandButton value="Salvar" />
-				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();"/>
-			</h:panelGrid>
+					<p:column headerText="E-mail">
+						<h:outputText value="#{funcionario.email}" />
+					</p:column>
+
+					<p:column headerText="Senha">
+						<h:outputText value="#{funcionario.senha}" />
+					</p:column>
+
+
+					<p:column headerText="Opções">
+						<p:commandButton icon="ui-icon-trash"
+							actionListener="#{funcionarioBean.excluir}"
+							update=":mensagem :formListagem:tabela">
+							<p:confirm header="Confirmação"
+								message="Deseja excluir o funcionário?"
+								icon="pi pi-exclamation-triangle" />
+							<f:attribute name="funcionarioSelecionado" value="#{funcionario}" />
+						</p:commandButton>
+						<p:commandButton icon="ui-icon-pencil"
+							actionListener="#{funcionarioBean.editar}"
+							update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
+							<f:attribute name="funcionarioSelecionado" value="#{funcionario}" />
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</p:column>
+
+				</p:dataTable>
+				<p:confirmDialog global="true">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+				</p:confirmDialog>
+			</p:panel>
 		</h:form>
-	</p:dialog>
-</h:body>
-</html>
+
+		<p:dialog header="Funcionários - Cadastro" widgetVar="dialogo"
+			draggable="false" resizable="false" modal="false">
+			<h:form id="formCadastro">
+				<h:panelGrid id="painel" columns="2">
+					<p:outputLabel value="Nome:" />
+					<p:inputText maxlength="100" size="30"
+						value="#{funcionarioBean.funcionario.nome}" required="true"
+						requiredMessage="O campo 'Nome' é obrigatório!" />
+
+					<p:outputLabel value="Função:" />
+					<p:inputText maxlength="30" size="10"
+						value="#{funcionarioBean.funcionario.funcao}" required="true"
+						requiredMessage="O campo 'Função' é obrigatório!" />
+
+					<p:outputLabel value="E-mail:" />
+					<p:inputText maxlength="50" size="30"
+						value="#{funcionarioBean.funcionario.email}" required="true"
+						requiredMessage="O campo 'E-mail' é obrigatório!" />
+
+					<p:outputLabel value="Senha:" />
+					<p:password maxlength="8" size="10"
+						value="#{funcionarioBean.funcionario.senha}" required="true"
+						requiredMessage="O campo 'Senha' é obrigatório!" />
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{funcionarioBean.salvar}"
+						update=":mensagem :formCadastro:painel :formListagem:tabela" />
+					<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+
+</ui:composition>
