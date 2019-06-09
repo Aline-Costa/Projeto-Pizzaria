@@ -7,6 +7,11 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	template="/templates/modelo.xhtml">
 
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewAction action="#{pedidoBean.novo}" />
+		</f:metadata>
+	</ui:define>
 
 	<ui:define name="conteudo">
 		<h:form id="formulario">
@@ -140,5 +145,4 @@
 			</h:form>
 		</p:dialog>
 	</ui:define>
-
 </ui:composition>

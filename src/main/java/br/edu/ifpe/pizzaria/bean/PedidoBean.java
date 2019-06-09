@@ -31,6 +31,7 @@ public class PedidoBean implements Serializable {
 	private List<Pizza> pizzas;
 	private List<PedidoPizza> pedidosPizzas;
 	private List<Cliente> clientes;
+	private List<Pedido> pedidos;
 
 	public Pedido getPedido() {
 		return pedido;
@@ -65,6 +66,14 @@ public class PedidoBean implements Serializable {
 		this.clientes = clientes;
 	}
 
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+
 	@PostConstruct
 	public void listar() {
 		try {
@@ -83,7 +92,6 @@ public class PedidoBean implements Serializable {
 		}
 	}
 
-	@PostConstruct
 	public void novo() {
 		try {
 			pedido = new Pedido();
@@ -97,6 +105,12 @@ public class PedidoBean implements Serializable {
 			Messages.addGlobalError("Ocorreu um erro ao tentar carregar a tela de pedidos");
 			erro.printStackTrace();
 		}
+	}
+	
+	public void listarPedidos(){
+		
+		PedidoDAO pedidoDAO = new PedidoDAO();
+		pedidos = pedidoDAO.listar();
 	}
 
 	public void adicionar(ActionEvent evento) {
