@@ -3,6 +3,7 @@ package br.edu.ifpe.pizzaria.bean;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -13,6 +14,7 @@ import javax.faces.event.ActionEvent;
 import org.omnifaces.util.Messages;
 
 import br.edu.ifpe.pizzaria.model.dao.ClienteDAO;
+import br.edu.ifpe.pizzaria.model.dao.PedidoDAO;
 import br.edu.ifpe.pizzaria.model.dao.PizzaDAO;
 import br.edu.ifpe.pizzaria.model.domain.Cliente;
 import br.edu.ifpe.pizzaria.model.domain.Pedido;
@@ -20,17 +22,16 @@ import br.edu.ifpe.pizzaria.model.domain.PedidoBebida;
 import br.edu.ifpe.pizzaria.model.domain.PedidoPizza;
 import br.edu.ifpe.pizzaria.model.domain.Pizza;
 
-
 @SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
-public class PedidoBean implements Serializable{
+public class PedidoBean implements Serializable {
 
 	private Pedido pedido;
 	private List<Pizza> pizzas;
 	private List<PedidoPizza> pedidosPizzas;
 	private List<Cliente> clientes;
-	
+
 	public Pedido getPedido() {
 		return pedido;
 	}
@@ -38,7 +39,7 @@ public class PedidoBean implements Serializable{
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
 	}
-	
+
 	public List<Pizza> getPizzas() {
 		return pizzas;
 	}
@@ -46,8 +47,7 @@ public class PedidoBean implements Serializable{
 	public void setPizzas(List<Pizza> pizzas) {
 		this.pizzas = pizzas;
 	}
-	
-	
+
 	public List<PedidoPizza> getPedidosPizzas() {
 		return pedidosPizzas;
 	}
@@ -55,6 +55,7 @@ public class PedidoBean implements Serializable{
 	public void setPedidosPizzas(List<PedidoPizza> pedidosPizzas) {
 		this.pedidosPizzas = pedidosPizzas;
 	}
+
 
 	public List<Cliente> getClientes() {
 		return clientes;
@@ -67,13 +68,13 @@ public class PedidoBean implements Serializable{
 	@PostConstruct
 	public void listar() {
 		try {
-			
+
 			pedido = new Pedido();
 			pedido.setValorTotal(new BigDecimal("0.00"));
 
 			PizzaDAO pizzaDao = new PizzaDAO();
 			pizzas = pizzaDao.listar();
-			
+
 			pedidosPizzas = new ArrayList<>();
 
 		} catch (RuntimeException erro) {
@@ -81,93 +82,134 @@ public class PedidoBean implements Serializable{
 			erro.printStackTrace();
 		}
 	}
-	
-	public void adicionar(ActionEvent evento){
-		
+
+	@PostConstruct
+	public void novo() {
+		try {
+			pedido = new Pedido();
+			pedido.setValorTotal(new BigDecimal("0.00"));
+			
+			PizzaDAO pizzaDAO = new PizzaDAO();
+			pizzas = pizzaDAO.listar();
+			pedidosPizzas = new ArrayList<>();
+			
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar carregar a tela de pedidos");
+			erro.printStackTrace();
+		}
+	}
+
+	public void adicionar(ActionEvent evento) {
+
 		Pizza pizza = (Pizza) evento.getComponent().getAttributes().get("pizzaSelecionada");
-		
+
 		int achou = -1;
-		
-		for(int pos = 0; pos < pedidosPizzas.size(); pos++){
-			if(pedidosPizzas.get(pos).getPizza().equals(pizza)){
+
+		for (int pos = 0; pos < pedidosPizzas.size(); pos++) {
+			if (pedidosPizzas.get(pos).getPizza().equals(pizza)) {
 				achou = pos;
 			}
 		}
-		
-		if(achou < 0){
-			
+
+		if (achou < 0) {
+
 			PedidoPizza pedidoPizza = new PedidoPizza();
-			
+
 			pedidoPizza.setPreco(pizza.getPreco());
 			pedidoPizza.setPizza(pizza);
 			pedidoPizza.setQtd(1L);
-			
+
 			pedidosPizzas.add(pedidoPizza);
-			
-		}else{
-			
+
+		} else {
+
 			PedidoPizza pedidoPizza = pedidosPizzas.get(achou);
-			
-			pedidoPizza.setQtd(new Long (pedidoPizza.getQtd() + 1L + ""));
+
+			pedidoPizza.setQtd(new Long(pedidoPizza.getQtd() + 1L + ""));
 			pedidoPizza.setPreco(pizza.getPreco().multiply(new BigDecimal(pedidoPizza.getQtd())));
-			
+
 		}
-		
+
 		calculaTotal();
 	}
-	
-	public void remover(ActionEvent evento){
-		
+
+	public void remover(ActionEvent evento) {
+
 		PedidoPizza pedidoPizza = (PedidoPizza) evento.getComponent().getAttributes().get("pedidoSelecionado");
-		
+
 		int achou = -1;
-		
-		for(int pos = 0; pos < pedidosPizzas.size(); pos++){
-			if(pedidosPizzas.get(pos).getPizza().equals(pedidoPizza.getPizza())){
+
+		for (int pos = 0; pos < pedidosPizzas.size(); pos++) {
+			if (pedidosPizzas.get(pos).getPizza().equals(pedidoPizza.getPizza())) {
 				achou = pos;
 			}
 		}
-		
-		if(achou > -1 && pedidoPizza.getQtd() > 1){
-			
-			pedidoPizza.setQtd(new Long (pedidoPizza.getQtd() - 1 + ""));
+
+		if (achou > -1 && pedidoPizza.getQtd() > 1) {
+
+			pedidoPizza.setQtd(new Long(pedidoPizza.getQtd() - 1 + ""));
 			pedidoPizza.setPreco(pedidoPizza.getPreco().subtract(pedidoPizza.getPizza().getPreco()));
-			
-		}else{
+
+		} else {
 			pedidosPizzas.remove(achou);
 		}
-		
+
 		calculaTotal();
 	}
-	
-	public void calculaTotal(){
-		
+
+	public void calculaTotal() {
+
 		pedido.setValorTotal(new BigDecimal("0.00"));
-		
-		for(int pos = 0; pos < pedidosPizzas.size(); pos++){
+
+		for (int pos = 0; pos < pedidosPizzas.size(); pos++) {
 			PedidoPizza pedidoPizza = pedidosPizzas.get(pos);
-			
+
 			pedido.setValorTotal(pedido.getValorTotal().add(pedidoPizza.getPreco()));
 		}
 	}
-	
-	public void finalizar(){
-		
-		try{
-			
-			
-		//	Cliente cliente = new Cliente();
-		// pedido.setCodCliente(cliente.getCodCliente());
-			
+
+	public void finalizar() {
+
+		try {
+
+			pedido.setHorario(new Date());
+			//pedido.setCodCliente(null);
+
+			// Cliente cliente = new Cliente();
+			// pedido.setCodCliente(cliente.getCodCliente());
+
 			ClienteDAO clienteDAO = new ClienteDAO();
 			clientes = clienteDAO.listar();
-			
-			
-		}catch(RuntimeException erro){
+
+		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar finalizar a venda!");
 			erro.printStackTrace();
 		}
-		
+
 	}
-	
+
+	public void salvar() {
+		try {
+			if (pedido.getValorTotal().signum() == 0) {
+				Messages.addGlobalError("Informe pelo menos um produto para a compra.");
+				return;
+			}
+			PedidoDAO pedidoDAO = new PedidoDAO();
+			pedidoDAO.salvar(pedido, pedidosPizzas);
+			
+			pedido = new Pedido();
+			pedido.setValorTotal(new BigDecimal("0.00"));
+			
+			PizzaDAO pizzaDAO = new PizzaDAO();
+			pizzas = pizzaDAO.listar();
+			pedidosPizzas = new ArrayList<>();
+			
+			Messages.addGlobalInfo("Pedido realizado com sucesso");
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar salvar pedido!");
+			erro.printStackTrace();
+		}
+
+	}
+
 }

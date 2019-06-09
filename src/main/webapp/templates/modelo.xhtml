@@ -14,8 +14,11 @@
 
 	<div id="geral">
 		<div id="topo" class="divTopo">
-			<p:graphicImage value="Fast Pizza" library="images" name="logo1.png"
-				styleClass="imagemCentralizada" />
+			<p:contentFlow value="#{imagesView.images}" var="image" style="background-color: black">
+				<p:graphicImage library="images" name="#{image}"
+					styleClass="content"/>
+				<div class="caption">#{image}</div>
+			</p:contentFlow>
 		</div>
 		<div id="cabecalho">
 			<h:form id="formMenu">
@@ -26,11 +29,8 @@
 					<p:submenu label="Cadastros">
 						<p:menuitem value="Cliente" outcome="/pages/cliente.xhtml" />
 						<p:menuitem value="Funcionário" outcome="/pages/funcionario.xhtml" />
-
 						<p:menuitem value="Bebida" outcome="/pages/bebida.xhtml" />
-
 						<p:menuitem value="Pizza" outcome="/pages/pizza.xhtml" />
-
 					</p:submenu>
 
 					<p:submenu label="Movimentações">
@@ -38,7 +38,7 @@
 					</p:submenu>
 
 					<p:submenu label="Sobre">
-						<p:menuitem value="Pedido" outcome="/pages/pedido.xhtml" />
+						
 					</p:submenu>
 
 				</p:menubar>
@@ -49,8 +49,6 @@
 			<ui:insert name="conteudo" />
 		</div>
 	</div>
-
-
 
 
 </h:body>

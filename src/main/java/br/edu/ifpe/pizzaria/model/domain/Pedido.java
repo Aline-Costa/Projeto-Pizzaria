@@ -27,22 +27,17 @@ public class Pedido implements Serializable{
 	
 	@Id
 	@Column(name = "cod_pedido", nullable = false)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long codPedido;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "cod_cliente", referencedColumnName = "cod_cliente", nullable = false)
 	private Cliente codCliente;
 	
-	@Column(length = 30, nullable = false)
-	private String status;
-	
-	@Column(length = 30, nullable = false)
-	private String pagamento;
-	
-	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
-	private Date data;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date horario;
+
 	
 	@Column(name = "valor_total", precision = 7, scale = 2)
 	private BigDecimal valorTotal;
@@ -65,13 +60,11 @@ public class Pedido implements Serializable{
 		
 	}
 
-	public Pedido(Long codPedido, Cliente codCliente, String status, String pagamento, List<PedidoBebida> bebidas,
+	public Pedido(Long codPedido, Cliente codCliente, List<PedidoBebida> bebidas,
 			List<PedidoPizza> pizzas) {
 		super();
 		this.codPedido = codPedido;
 		this.codCliente = codCliente;
-		this.status = status;
-		this.pagamento = pagamento;
 		this.bebidas = bebidas;
 		this.pizzas = pizzas;
 	}
@@ -92,28 +85,12 @@ public class Pedido implements Serializable{
 		this.codCliente = codCliente;
 	}
 
-	public String getStatus() {
-		return status;
+	public Date getHorario() {
+		return horario;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public String getPagamento() {
-		return pagamento;
-	}
-
-	public void setPagamento(String pagamento) {
-		this.pagamento = pagamento;
-	}
-
-	public Date getData() {
-		return data;
-	}
-
-	public void setData(Date data) {
-		this.data = data;
+	public void setHorario(Date horario) {
+		this.horario = horario;
 	}
 
 	public BigDecimal getValorTotal() {

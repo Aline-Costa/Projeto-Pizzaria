@@ -2,31 +2,39 @@ package br.edu.ifpe.pizzaria.dao;
 
 import java.util.List;
 
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import br.edu.ifpe.pizzaria.model.dao.ClienteDAO;
 import br.edu.ifpe.pizzaria.model.dao.UsuarioDAO;
+import br.edu.ifpe.pizzaria.model.domain.Cliente;
 import br.edu.ifpe.pizzaria.model.domain.Usuario;
 
 public class UsuarioDaoTest {
 
 	@Test
-	@Ignore
 	public void salvar() {
 		
-		Usuario u2 = new Usuario();
+		Cliente u2 = new Cliente();
 
 		u2.setNome("Eduarda Campos");
 		u2.setRua("E");
 		u2.setNumCasa(15L);
 		u2.setBairro("Cohab 2");
-		u2.setLogin("eduarda");
-		u2.setSenha("1234");
+		u2.setEmail("eduarda@gmail.com");
+		u2.setSenhaSemCriptografia("1234");
+		u2.setTelefone("00000000");
 		u2.setEmail("eduarda@gmail.com");
 		
-		UsuarioDAO u2DAO = new UsuarioDAO();
+		SimpleHash hash = new SimpleHash("md5", u2.getSenhaSemCriptografia());
+		u2.setSenha(hash.toHex());
+		
+		
+		ClienteDAO u2DAO = new ClienteDAO();
 		u2DAO.salvar(u2);
 
+		/*
 		Usuario u3 = new Usuario();
 
 		u3.setNome("Pedro Santos");
@@ -39,10 +47,13 @@ public class UsuarioDaoTest {
 		
 		UsuarioDAO u3DAO = new UsuarioDAO();
 		u3DAO.salvar(u3);
+		
+		*/
 	}
 	
 	@SuppressWarnings("unused")
 	@Test
+	@Ignore
 	public void listar() {
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		List<Usuario> resultado = usuarioDAO.listar();
@@ -79,7 +90,6 @@ public class UsuarioDaoTest {
 			System.out.println("Usuário excluído com sucesso!");
 			System.out.println(usuario.getNome() + "-" + usuario.getLogin());
 			
-		
 		}
 	}
 	@Test
@@ -91,9 +101,8 @@ public class UsuarioDaoTest {
 		if(usuario == null){
 			System.out.println("Nenhum registro encontrado!");
 		}else{
-			usuario.setNome("Mari Eduarda Campos");
-			usuarioDAO.editar(usuario);
-			
+			usuario.setNome("Maria Eduarda Campos");
+			usuarioDAO.editar(usuario);	
 		
 		}
 	}

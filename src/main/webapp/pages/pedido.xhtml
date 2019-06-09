@@ -109,9 +109,18 @@
 		<p:dialog header="Finalizar Pedido" widgetVar="dialogo"
 			draggable="false" resizable="false" modal="false">
 			<h:form id="formularioFinalizar">
-
-				<h:panelGrid columns="2">
+				<h:panelGrid id="painelFinalizar" columns="2">
+					<p:outputLabel value="Horário: " />
+					<h:outputText value="#{pedidoBean.pedido.horario}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR"
+							timeZone="America/Sao_Paulo" />
+					</h:outputText>
+					<p:outputLabel value="Total:" />
+					<h:outputText value="#{pedidoBean.pedido.valorTotal}">
+						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+					</h:outputText>
 					<p:outputLabel value="Cliente:" />
+
 					<p:selectOneMenu value="#{pedidoBean.pedido.codCliente}"
 						converter="omnifaces.SelectItemsConverter" filter="true">
 						<f:selectItem noSelectionOption="true"
@@ -119,9 +128,13 @@
 						<f:selectItems value="#{pedidoBean.clientes}" var="cliente"
 							itemValue="#{cliente}" itemLabel="#{cliente.nome}" />
 					</p:selectOneMenu>
+
 				</h:panelGrid>
-				<h:panelGrid id="painelFinalizar" columns="2">
-					<p:commandButton value="Salvar" />
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{pedidoBean.salvar}"
+						update=":mensagem :formulario:tabelaPizza :formulario:tabelaCesta formulario:painelFinalizacao"
+						oncomplete="PF('dialogo').hide();" />
 					<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
 				</h:panelGrid>
 			</h:form>

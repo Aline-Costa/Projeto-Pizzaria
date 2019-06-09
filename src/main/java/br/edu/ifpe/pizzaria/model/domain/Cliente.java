@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 
@@ -37,6 +38,9 @@ public class Cliente {
 	
 	@Column(name = "senha", length = 15, nullable = false)
 	private String senha;
+	
+	@Transient
+	private String senhaSemCriptografia;
 	
 	@Column(name = "email", length = 80, nullable = false, unique = true)
 	private String email;
@@ -120,6 +124,14 @@ public class Cliente {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getSenhaSemCriptografia() {
+		return senhaSemCriptografia;
+	}
+
+	public void setSenhaSemCriptografia(String senhaSemCriptografia) {
+		this.senhaSemCriptografia = senhaSemCriptografia;
 	}
 
 	@Override

@@ -22,11 +22,11 @@ public class Cliente1 extends Usuario implements Serializable {
 	public Cliente1() {
 
 	}
-
-	public Cliente1(String nome, String rua, Long numCasa, String bairro, String login,
+/*
+	public Cliente1(String nome, String rua, Long numCasa, String bairro, 
 			String senha, String email, Long codCliente) {
 
-		super(nome, rua, numCasa, bairro, login, senha, email);
+		super(nome, senha, email);
 
 		this.codCliente = codCliente;
 	}
@@ -38,5 +38,5 @@ public class Cliente1 extends Usuario implements Serializable {
 	public void setCodCliente(Long codCliente) {
 		this.codCliente = codCliente;
 	}
-
+*/
 }
