@@ -25,18 +25,6 @@ public class Usuario {
 	@Column(name = "nome", length = 80, nullable = false)
 	protected String nome;
 	
-	@Column(name = "rua", length = 50, nullable = false)
-	protected String rua;
-	
-	@Column(name = "num_casa", nullable = false)
-	protected Long numCasa;
-	
-	@Column(name = "bairro", length = 50, nullable = false)
-	protected String bairro;
-	
-	@Column(name = "login", length = 100, nullable = false, unique = true)
-	protected String login;
-	
 	@Column(name = "senha", length = 15, nullable = false)
 	protected String senha;
 	
@@ -47,13 +35,9 @@ public class Usuario {
 		
 	}
 	
-	public Usuario(String nome, String rua, Long numCasa, String bairro, String login, String senha, String email){
+	public Usuario(String nome, String senha, String email){
 		
 		this.nome =  nome;
-		this.rua = rua;
-		this.numCasa = numCasa;
-		this.bairro = bairro;
-		this.login = login;
 		this.senha = senha;
 		this.email = email;
 		
@@ -76,38 +60,6 @@ public class Usuario {
 		this.nome = nome;
 	}
 
-	public String getRua() {
-		return rua;
-	}
-
-	public void setRua(String rua) {
-		this.rua = rua;
-	}
-
-	public Long getNumCasa() {
-		return numCasa;
-	}
-
-	public void setNumCasa(Long numCasa) {
-		this.numCasa = numCasa;
-	}
-
-	public String getBairro() {
-		return bairro;
-	}
-
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
-	}
-
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
 	public String getSenha() {
 		return senha;
 	}
@@ -126,9 +78,7 @@ public class Usuario {
 
 	@Override
 	public String toString() {
-		return "Usuario [codUsuario=" + codUsuario + ", nome=" + nome + ", rua=" + rua + ", numCasa=" + numCasa
-				+ ", bairro=" + bairro + ", login=" + login + ", senha=" + senha
-				+ ", email=" + email + "]";
+		return "Usuario [codUsuario=" + codUsuario + ", nome=" + nome + ", senha=" + senha + ", email=" + email + "]";
 	}
 
 }

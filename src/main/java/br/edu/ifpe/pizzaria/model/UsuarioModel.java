@@ -12,11 +12,11 @@ public class UsuarioModel {
 
 	DAO<Object> dao = new GenericDAO();
 	private ArrayList<Usuario> usuarios = new ArrayList<>();
-
+/*
 	public void registrarUsuario(Usuario u) {
 		try {
-			if (u.getBairro() != null && u.getEmail() != null && u.getLogin() != null && u.getNome() != null
-					&& u.getNumCasa() != null && u.getRua() != null && u.getSenha() != null
+			if (u.getEmail() != null && u.getNome() != null
+					&& u.getSenha() != null
 					&& !this.existeLogin(u.getLogin()) && !this.existeEmail(u.getEmail())) {
 				dao.salvar(u);
 				System.out.println("Usuário salvo com sucesso!.");
@@ -37,7 +37,7 @@ public class UsuarioModel {
 		}
 		return ret;
 	}
-
+*/
 	private boolean existeEmail(String email) {
 		boolean ret = false;
 		for (Usuario u : usuarios) {

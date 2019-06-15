@@ -63,7 +63,6 @@ public class ClienteDAO extends GenericDAO{
 			consulta.add(Restrictions.eq("senha", hash.toHex()));
 			*/
 			
-			
 			Cliente resultado = (Cliente) consulta.uniqueResult();
 			
 			return resultado;

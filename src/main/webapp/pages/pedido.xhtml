@@ -14,6 +14,9 @@
 	</ui:define>
 
 	<ui:define name="conteudo">
+		<h2 style="color:#990000">
+			<h:outputText value="Bem-vindo ao Fast Pizza, #{loginBean.clienteLogado.nome}!" />
+		</h2>
 		<h:form id="formulario">
 			<p:panel header="Pizzas">
 				<p:dataTable id="tabelaPizza"
@@ -37,7 +40,7 @@
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Opções">
+					<p:column headerText="Adicionar à cesta">
 						<p:commandButton icon="ui-icon-plus"
 							actionListener="#{pedidoBean.adicionar}"
 							update=":formulario:tabelaCesta :formulario:painelFinalizacao">
@@ -74,17 +77,17 @@
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Qtd">
+					<p:column headerText="Quantidade">
 						<h:outputText value="#{pedidoPizza.qtd}" />
 					</p:column>
 
-					<p:column headerText="Preço Parcial.">
+					<p:column headerText="Preço Parcial">
 						<h:outputText value="#{pedidoPizza.preco}">
 							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Opções">
+					<p:column headerText="Retirar da cesta">
 						<p:commandButton icon="ui-icon-minus"
 							actionListener="#{pedidoBean.remover}"
 							update=":formulario:tabelaCesta :formulario:painelFinalizacao">

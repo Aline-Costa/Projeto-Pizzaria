@@ -19,7 +19,7 @@
 		<!-- SQL dialect -->
 		<property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
 
-		<!-- Gerenciamneto de contexto das sessões -->
+		<!-- Gerenciamento de contexto das sessões -->
 		<property name="current_session_context_class">thread</property>
 
 		<!-- Cache de segundo nível -->

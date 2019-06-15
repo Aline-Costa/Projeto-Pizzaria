@@ -10,38 +10,38 @@
 	<title>Login</title>
 </h:head>
 <h:body>
-
+	<f:metadata>
+		<f:viewAction action="#{loginBean.iniciar}" />
+	</f:metadata>
 	<p:growl id="mensagem" />
 	<div>
-		<p:contentFlow value="#{imagesView.images}" var="image" style="background-color: black">
+		<p:contentFlow value="#{imagesView.images}" var="image"
+			style="background-color: #65122A">
 			<p:graphicImage library="images" name="#{image}" styleClass="content" />
 			<div class="caption">#{image}</div>
 		</p:contentFlow>
 		<h:form>
 
-			<p:commandButton value="Login" oncomplete="PF('dialogo').show();"
+			<p:commandButton value="Login" oncomplete="PF('dialogo3').show();"
 				actionListener="#{loginBean.iniciar}">
-
 				<f:actionListener
 					type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 			</p:commandButton>
-			<p:commandButton value="Faça seu Pedido!" oncomplete="PF('dialogo2').show();"
+			<p:commandButton value="Faça seu Pedido!"
+				oncomplete="PF('dialogo2').show();"
 				actionListener="#{clienteBean.novo}" update=":formCadastro:painel">
 				<f:actionListener
 					type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 			</p:commandButton>
 		</h:form>
-		
-		
+
+
 		<h2>Cardápios</h2>
-		
-		<div id="cardapio">
-		
-		
-		</div>
+
+		<div id="cardapio"></div>
 
 		<p:dialog header="Login" widgetVar="dialogo" closable="false"
-			draggable="false" resizable="false" modal="true" >
+			draggable="false" resizable="false" modal="true">
 			<h:form id="formLogin">
 				<h:panelGrid columns="2">
 					<p:outputLabel for="email" value="E-mail:" />
@@ -57,15 +57,40 @@
 
 				<h:panelGrid columns="2">
 					<p:commandButton value="Entrar" update=":mensagem"
-						actionListener="#{loginBean.autenticar}" />
+						actionListener="#{loginBean.autenticarCliente}" />
 					<p:commandButton value="Cancelar"
 						oncomplete="PF('dialogo').hide();" />
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
+		
+		<p:dialog header="Login" widgetVar="dialogo3" closable="false"
+			draggable="false" resizable="false" modal="true">
+			<h:form id="formLoginFunc">
+				<h:panelGrid columns="2">
+					<p:outputLabel for="email" value="E-mail:" />
+					<p:inputText id="email" size="20" required="true"
+						requiredMessage="O campo E-mail é obrigatório"
+						value="#{loginBean.funcionario.email}" />
 
-		<p:dialog header="Cadastre-se para fazer o pedido" widgetVar="dialogo2"
-			draggable="false" resizable="false" modal="false">
+					<p:outputLabel for="senha" value="Senha:" />
+					<p:password id="senha" maxlength="8" size="20" required="true"
+						requiredMessage="O campo Senha é obrigatório"
+						value="#{loginBean.funcionario.senha}" />
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Entrar" update=":mensagem"
+						actionListener="#{loginBean.autenticarFuncionario}" />
+					<p:commandButton value="Cancelar"
+						oncomplete="PF('dialogo3').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+		
+		<p:dialog header="Cadastre-se para fazer o pedido"
+			widgetVar="dialogo2" draggable="false" resizable="false"
+			modal="false">
 			<h:form id="formCadastro">
 				<h:panelGrid id="painel" columns="2">
 
@@ -110,8 +135,17 @@
 					<p:commandButton value="Salvar"
 						actionListener="#{clienteBean.salvar}"
 						update=":mensagem :formCadastro:painel " />
-					<p:commandButton value="Fechar" oncomplete="PF('dialogo2').hide();"/>
+					<p:commandButton value="Fechar" oncomplete="PF('dialogo2').hide();" />
 				</h:panelGrid>
+				
+				<h2>Já possui cadastro</h2>
+				<p:commandButton value="Login" oncomplete="PF('dialogo').show();"
+				actionListener="#{loginBean.iniciar}">
+
+				<f:actionListener
+					type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+			</p:commandButton>
+
 			</h:form>
 		</p:dialog>
 	</div>

@@ -45,6 +45,7 @@
 
 	<!-- Dependências -->
 	<dependencies>
+	
 		<!-- Hibernate Core -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
