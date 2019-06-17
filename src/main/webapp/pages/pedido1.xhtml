@@ -14,11 +14,56 @@
 	</ui:define>
 
 	<ui:define name="conteudo">
-	
 		<h2 style="color: #990000">
 			<h:outputText
 				value="Bem-vindo ao Fast Pizza, #{loginBean.usuarioLogado.nome}!" />
 		</h2>
+		
+		<p:dialog header="Clientes - Cadastro" widgetVar="dialogoEnd"
+			draggable="false" resizable="false" modal="false">
+			<h:form id="formCadastro">
+				<h:panelGrid id="painel" columns="2">
+
+					<p:outputLabel value="Usuário:" />
+
+					<h:selectOneRadio id="usuario"
+						value="#{clienteBean.cliente.usuario}"
+						converter="omnifaces.SelectItemsConverter" filter="true">
+						<f:selectItem itemLabel="#{loginBean.usuarioLogado.nome}"
+							itemValue="#{loginBean.usuarioLogado}" />
+					</h:selectOneRadio>
+
+					<p:outputLabel value="Rua:" />
+					<p:inputText maxlength="50" size="30"
+						value="#{clienteBean.cliente.rua}" required="true"
+						requiredMessage="O campo 'Rua' é obrigatório!" />
+
+					<p:outputLabel value="Nº da casa:" />
+					<p:inputText maxlength="10" size="15"
+						value="#{clienteBean.cliente.numCasa}" required="true"
+						requiredMessage="O campo 'Nº da casa' é obrigatório!" />
+
+					<p:outputLabel value="Bairro:" />
+					<p:inputText maxlength="50" size="30"
+						value="#{clienteBean.cliente.bairro}" required="true"
+						requiredMessage="O campo 'Bairro' é obrigatório!" />
+
+					<p:outputLabel value="Telefone:" />
+					<p:inputMask id="telefone" mask="(99)99999-9999" maxlength="14"
+						size="16" value="#{clienteBean.cliente.telefone}" required="true"
+						requiredMessage="O campo 'Telefone' é obrigatório!" />
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{clienteBean.salvar}"
+						update=":mensagem :formCadastro:painel " />
+					<p:commandButton value="Fechar"
+						oncomplete="PF('dialogoEnd').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
 		<h:form id="formulario">
 			<p:panel header="Pizzas">
 				<p:dataTable id="tabelaPizza"
@@ -97,7 +142,15 @@
 				</p:dataTable>
 			</p:panel>
 
-			<p:panel header="Finalização do pedido">
+			<p:panel header="Finalização do pedido" columns="2">
+				<p:commandButton value="Cadastrar Endereço"
+					oncomplete="PF('dialogoEnd').show();"
+					actionListener="#{clienteBean.novo}"
+					action="#{clienteBean.retornaUsuario}"
+					update=":formCadastro:painel">
+					<f:actionListener
+						type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+				</p:commandButton>
 				<h:panelGrid id="painelFinalizacao" columns="3">
 					<p:outputLabel value="Total:" />
 					<h:outputText value="#{pedidoBean.pedido.valorTotal}">
@@ -124,8 +177,7 @@
 					<h:outputText value="#{pedidoBean.pedido.valorTotal}">
 						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
 					</h:outputText>
-					<p:outputLabel value="Cliente:" />
-
+					
 					<p:selectOneMenu value="#{pedidoBean.pedido.codCliente}"
 						converter="omnifaces.SelectItemsConverter" filter="true">
 						<f:selectItem noSelectionOption="true"

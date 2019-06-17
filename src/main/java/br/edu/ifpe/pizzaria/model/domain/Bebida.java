@@ -20,7 +20,7 @@ public class Bebida implements Serializable{
 	
 	@Id
 	@Column(name = "cod_bebida")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long codBebida;
 	
 	@Column(length = 40, nullable = false)

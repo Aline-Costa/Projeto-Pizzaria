@@ -32,9 +32,9 @@
 							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
 						</h:outputText>
 					</p:column>
-					<p:column headerText="Cliente" filterBy="#{pedido.codCliente.nome}"
-						sortBy="#{pedido.codCliente.nome}">
-						<h:outputText value="#{pedido.codCliente.nome}" />
+					<p:column headerText="Cliente" filterBy="#{pedido.codCliente.usuario.nome}"
+						sortBy="#{pedido.codCliente.usuario.nome}">
+						<h:outputText value="#{pedido.codCliente.usuario.nome}" />
 					</p:column>
 
 					<p:column headerText="Pizza">

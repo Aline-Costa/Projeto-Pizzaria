@@ -9,8 +9,11 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import org.omnifaces.util.Messages;
 
+
 import br.edu.ifpe.pizzaria.model.dao.FuncionarioDAO;
+import br.edu.ifpe.pizzaria.model.dao.UsuarioDAO;
 import br.edu.ifpe.pizzaria.model.domain.Funcionario;
+import br.edu.ifpe.pizzaria.model.domain.Usuario;
 
 @SuppressWarnings({ "serial", "deprecation" })
 @ManagedBean
@@ -19,6 +22,8 @@ public class FuncionarioBean implements Serializable {
 
 	private Funcionario funcionario;
 	private List<Funcionario> funcionarios;
+	private List<Usuario> usuarios;
+	
 
 
 	public Funcionario getFuncionario() {
@@ -35,6 +40,14 @@ public class FuncionarioBean implements Serializable {
 
 	public void setFuncionarios(List<Funcionario> funcionarios) {
 		this.funcionarios = funcionarios;
+	}
+
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}
 
 	@PostConstruct
@@ -98,6 +111,13 @@ public class FuncionarioBean implements Serializable {
 			erro.printStackTrace();
 		}
 		
+	}
+	
+	public void retornaUsuario(){
+		
+		UsuarioDAO usuarioDAO = new UsuarioDAO();
+		usuarios = usuarioDAO.listar();
+
 	}
 
 }

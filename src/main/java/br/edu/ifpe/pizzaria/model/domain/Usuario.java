@@ -19,7 +19,7 @@ public class Usuario {
 	
 	@Id
 	@Column(name = "cod_usuario", nullable = false)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	protected Long codUsuario;
 	
 	@Column(name = "nome", length = 80, nullable = false)

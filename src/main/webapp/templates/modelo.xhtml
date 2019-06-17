@@ -20,7 +20,7 @@
 				style="background-color: #65122A">
 				<p:graphicImage library="images" name="#{image}"
 					styleClass="content" />
-				<div class="caption">#{image}</div>
+				<div class="caption"></div>
 			</p:contentFlow>
 		</div>
 		<div id="cabecalho">
@@ -31,6 +31,7 @@
 						<p:menuitem value="Funcionário" outcome="/pages/funcionario.xhtml" />
 						<p:menuitem value="Bebida" outcome="/pages/bebida.xhtml" />
 						<p:menuitem value="Pizza" outcome="/pages/pizza.xhtml" />
+						<p:menuitem value="Usuário" outcome="/pages/usuario.xhtml" />
 					</p:submenu>
 
 					<p:submenu label="Movimentações">
@@ -38,13 +39,18 @@
 						<p:menuitem value="Pedidos" outcome="/pages/pedidosListagem.xhtml" />
 					</p:submenu>
 
-					<p:submenu label="Sair" />
+					<p:submenu label="Opções">
+						<p:menuitem value="Sair" outcome="/pages/login.xhtml" />
+					</p:submenu>
 				</p:menubar>
 			</h:form>
 
 		</div>
 		<div id="conteudo">
 			<ui:insert name="conteudo" />
+		</div>
+		<div id="footer" class="ui-g-12" style="background-color: #65122A">
+			<p>© Aline Costa | Todos os direitos reservados</p>
 		</div>
 	</div>
 </h:body>

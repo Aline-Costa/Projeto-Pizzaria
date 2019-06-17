@@ -46,31 +46,4 @@ public class FuncionarioDAO extends GenericDAO{
 			sessao.close();
 		}
 	}
-	
-	public Funcionario autenticar(String email, String senha) {
-		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
-		
-		try{
-			Criteria consulta = sessao.createCriteria(Funcionario.class);
-			
-			consulta.add(Restrictions.eq("email", email));
-			
-			consulta.add(Restrictions.eq("senha", senha));
-			
-			/*
-			SimpleHash hash = new SimpleHash("md5", senha);
-			consulta.add(Restrictions.eq("senha", hash.toHex()));
-			*/
-			
-			
-			Funcionario resultado = (Funcionario) consulta.uniqueResult();
-			
-			return resultado;
-		} catch (RuntimeException erro) {
-			throw erro;
-		} finally {
-			sessao.close();
-		}
-	}	
-
 }

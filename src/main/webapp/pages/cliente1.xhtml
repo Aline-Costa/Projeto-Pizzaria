@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
+
+	<ui:define name="conteudo">
+
+		<p:dialog header="Clientes - Cadastro" widgetVar="dialogo" visible="true"
+			draggable="false" resizable="false" modal="false">
+			<h:form id="formCadastro">
+				<h:panelGrid id="painel" columns="2">
+
+					<p:outputLabel value="Usuário:" />
+
+					<h:selectOneRadio id="usuario"
+						value="#{clienteBean.cliente.usuario}"
+						converter="omnifaces.SelectItemsConverter" filter="true">
+						<f:selectItem itemLabel="#{loginBean.usuarioLogado.nome}"
+							itemValue="#{loginBean.usuarioLogado}" />
+					</h:selectOneRadio>
+
+					<p:outputLabel value="Rua:" />
+					<p:inputText maxlength="50" size="30"
+						value="#{clienteBean.cliente.rua}" required="true"
+						requiredMessage="O campo 'Rua' é obrigatório!" />
+
+					<p:outputLabel value="Nº da casa:" />
+					<p:inputText maxlength="10" size="15"
+						value="#{clienteBean.cliente.numCasa}" required="true"
+						requiredMessage="O campo 'Nº da casa' é obrigatório!" />
+
+					<p:outputLabel value="Bairro:" />
+					<p:inputText maxlength="50" size="30"
+						value="#{clienteBean.cliente.bairro}" required="true"
+						requiredMessage="O campo 'Bairro' é obrigatório!" />
+
+					<p:outputLabel value="Telefone:" />
+					<p:inputMask id="telefone" mask="(99)99999-9999" maxlength="14"
+						size="16" value="#{clienteBean.cliente.telefone}" required="true"
+						requiredMessage="O campo 'Telefone' é obrigatório!" />
+
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{clienteBean.salvar}"
+						update=":mensagem :formCadastro:painel " />
+					<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+
+</ui:composition>

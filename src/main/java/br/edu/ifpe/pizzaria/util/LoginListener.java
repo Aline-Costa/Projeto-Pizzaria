@@ -7,7 +7,7 @@ import javax.faces.event.PhaseListener;
 import org.omnifaces.util.Faces;
 
 import br.edu.ifpe.pizzaria.bean.LoginBean;
-import br.edu.ifpe.pizzaria.model.domain.Cliente;
+import br.edu.ifpe.pizzaria.model.domain.Usuario;
 
 @SuppressWarnings("serial")
 public class LoginListener implements PhaseListener{
@@ -28,8 +28,8 @@ public class LoginListener implements PhaseListener{
 				Faces.navigate("/pages/login.xhtml");
 				return;
 			}
-			Cliente cliente = loginBean.getClienteLogado();
-			if(cliente == null){
+			Usuario usuario = loginBean.getUsuarioLogado();
+			if(usuario == null){
 				Faces.navigate("/pages/login.xhtml");
 				return;	
 			}

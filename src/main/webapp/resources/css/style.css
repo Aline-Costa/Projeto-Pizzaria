@@ -18,13 +18,48 @@
 	font-size: 95%;
 }
 
-#pedido {
-	height: 100px;
-	width: 200px;
-	color:red;
-	border-radius: 20px;
-	border-color: black;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
+#textoCard{
+	
+	color: #000000;
+	padding: 0;
+	margin: 0;
+	font-size: 20px;
 }
+#tCad{
+	text-align: center;
+	font-size: 35px;
+}
+
+#footer{
+  text-align: center;
+  padding: 2px;
+  color: lightgrey;
+  
+}
+#pedido a{
+	text-align: center;
+	color: red;
+	font-size: 40px;
+	
+}
+
+#principal{
+	
+	background-color: #ffffff;
+	color:#000000;
+	
+}
+
+#titulo{
+	text-align: center;
+	color:#000000;
+	font-size: 25px;
+}
+
+b{
+	color: #d2691e;
+}
+
+
+
+

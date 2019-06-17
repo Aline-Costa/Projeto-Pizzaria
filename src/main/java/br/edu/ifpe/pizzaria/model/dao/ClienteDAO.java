@@ -48,28 +48,24 @@ public class ClienteDAO extends GenericDAO{
 		}
 	}
 	
-	public Cliente autenticar(String email, String senha) {
+	public Cliente buscarPorCodUsuario(Long codUsuario) {
+
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
-		
-		try{
-			Criteria consulta = sessao.createCriteria(Cliente.class);
-			
-			consulta.add(Restrictions.eq("email", email));
-			
-			consulta.add(Restrictions.eq("senha", senha));
-			
-			/*
-			SimpleHash hash = new SimpleHash("md5", senha);
-			consulta.add(Restrictions.eq("senha", hash.toHex()));
-			*/
-			
-			Cliente resultado = (Cliente) consulta.uniqueResult();
-			
-			return resultado;
-		} catch (RuntimeException erro) {
-			throw erro;
+		Cliente cliente = null;
+
+		try {
+
+			Query consulta = sessao.getNamedQuery("Cliente.buscarPorCodUsuario");
+			consulta.setLong("usuario", codUsuario);
+
+			cliente = (Cliente) consulta.uniqueResult();
+
+		} catch (RuntimeException ex) {
+			throw ex;
 		} finally {
 			sessao.close();
 		}
-	}	
+		return cliente;
+	}
+	
 }

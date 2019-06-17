@@ -22,6 +22,7 @@ import br.edu.ifpe.pizzaria.model.domain.PedidoBebida;
 import br.edu.ifpe.pizzaria.model.domain.PedidoPizza;
 import br.edu.ifpe.pizzaria.model.domain.Pizza;
 
+
 @SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
@@ -30,8 +31,8 @@ public class PedidoBean implements Serializable {
 	private Pedido pedido;
 	private List<Pizza> pizzas;
 	private List<PedidoPizza> pedidosPizzas;
-	private List<Cliente> clientes;
 	private List<Pedido> pedidos;
+	private List<Cliente> clientes;
 
 	public Pedido getPedido() {
 		return pedido;
@@ -57,6 +58,13 @@ public class PedidoBean implements Serializable {
 		this.pedidosPizzas = pedidosPizzas;
 	}
 
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
 
 	public List<Cliente> getClientes() {
 		return clientes;
@@ -64,14 +72,6 @@ public class PedidoBean implements Serializable {
 
 	public void setClientes(List<Cliente> clientes) {
 		this.clientes = clientes;
-	}
-
-	public List<Pedido> getPedidos() {
-		return pedidos;
-	}
-
-	public void setPedidos(List<Pedido> pedidos) {
-		this.pedidos = pedidos;
 	}
 
 	@PostConstruct
@@ -187,16 +187,13 @@ public class PedidoBean implements Serializable {
 		try {
 
 			pedido.setHorario(new Date());
-			//pedido.setCodCliente(null);
-
-			// Cliente cliente = new Cliente();
-			// pedido.setCodCliente(cliente.getCodCliente());
-
-			ClienteDAO clienteDAO = new ClienteDAO();
-			clientes = clienteDAO.listar();
+		
+			ClienteDAO clienteDAO =  new ClienteDAO();
+			clientes = clienteDAO.listar(); 
+			
 
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Ocorreu um erro ao tentar finalizar a venda!");
+			
 			erro.printStackTrace();
 		}
 

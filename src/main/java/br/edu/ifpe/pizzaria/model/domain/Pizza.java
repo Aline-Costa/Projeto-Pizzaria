@@ -18,7 +18,7 @@ import javax.persistence.OneToMany;
 public class Pizza {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "cod_pizza")
 	private Long codPizza;
 

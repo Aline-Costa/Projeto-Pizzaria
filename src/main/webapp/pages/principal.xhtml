@@ -8,14 +8,44 @@
 	template="/templates/modelo.xhtml">
 
 	<ui:define name="conteudo">
-		<h2>
+		<h3>
 			<h:outputText
-				value="Bem-vindo ao Fast Pizza, #{loginBean.funcionarioLogado.nome}!" />
-		</h2>
+				value="Bem-vindo ao Fast Pizza, #{loginBean.usuarioLogado.nome}!" />
+		</h3>
+		<div id="principal" class="ui-g-12 ui-g-nopad">
+			<div class="ui-g" id="titulo">
+				<div class="ui-g-12">
+					<h2>Sim, existe algo melhor que pizza, várias pizzas! </h2>
+				</div>
+			</div>
 
+			<div class="ui-g">
+				<div class="ui-g-6 ui-md-3">
+					<p:graphicImage library="images" name="princ1.jpg"
+						style="width:100%" />
+				</div>
+				<div class="ui-g-6 ui-md-3">
+					<p:graphicImage library="images" name="princ2.jpg"
+						style="width:100%" />
+				</div>
+				<div class="ui-g-6 ui-md-3">
+					<p:graphicImage library="images" name="princ3.jpg"
+						style="width:100%" />
+				</div>
+				<div class="ui-g-6 ui-md-3">
+					<p:graphicImage library="images" name="princ4.jpg"
+						style="width:100%" />
+				</div>
+			</div>
+
+
+
+		</div>
+		<!--  
 		<div id="pedido">
 			<a href="pedido.xhtml"> Faça seu Pedido! </a>
 		</div>
+-->
 	</ui:define>
 
 </ui:composition>

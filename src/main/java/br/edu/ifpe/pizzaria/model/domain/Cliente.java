@@ -2,27 +2,28 @@ package br.edu.ifpe.pizzaria.model.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
 
-@Table(name = "usuario_cliente")
-@NamedQueries({@NamedQuery(name = "Cliente.buscarPorCodigo", query = "SELECT cliente FROM Cliente cliente WHERE cliente.codCliente = :codCliente")})
+@Table(name = "cliente")
+@NamedQueries({@NamedQuery(name = "Cliente.buscarPorCodigo", query = "SELECT cliente FROM Cliente cliente WHERE cliente.codCliente = :codCliente"), @NamedQuery(name = "Cliente.buscarPorCodUsuario", query = "SELECT cliente FROM Cliente cliente WHERE cliente.usuario = :codUsuario")})
 public class Cliente {
 	
 	@Id
 	@Column(name = "cod_cliente", nullable = false)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long codCliente;
-	
-	@Column(name = "nome", length = 80, nullable = false)
-	private String nome;
 	
 	@Column(name = "rua", length = 50, nullable = false)
 	private String rua;
@@ -36,31 +37,26 @@ public class Cliente {
 	@Column(name = "telefone", length = 50, nullable = false)
 	private String telefone;
 	
-	@Column(name = "senha", length = 15, nullable = false)
-	private String senha;
-	
 	@Transient
 	private String senhaSemCriptografia;
 	
-	@Column(name = "email", length = 80, nullable = false, unique = true)
-	private String email;
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "cod_usuario", referencedColumnName = "cod_usuario", nullable = false)
+	private Usuario usuario;
 
 	public Cliente(){
 		
 	}
 	
-	public Cliente(String nome, String rua, Long numCasa, String bairro, String telefone, String senha, String email){
+	public Cliente(String rua, Long numCasa, String bairro, String telefone, Usuario usuario){
 		
-		this.nome =  nome;
 		this.rua = rua;
 		this.numCasa = numCasa;
 		this.bairro = bairro;
 		this.telefone = telefone;
-		this.senha = senha;
-		this.email = email;
+		this.usuario = usuario;
 		
 	}
-	
 	
 	public Long getCodCliente() {
 		return codCliente;
@@ -68,14 +64,6 @@ public class Cliente {
 
 	public void setCodCliente(Long codCliente) {
 		this.codCliente = codCliente;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
 	}
 
 	public String getRua() {
@@ -110,22 +98,6 @@ public class Cliente {
 		this.telefone = telefone;
 	}
 
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getSenhaSemCriptografia() {
 		return senhaSemCriptografia;
 	}
@@ -134,11 +106,18 @@ public class Cliente {
 		this.senhaSemCriptografia = senhaSemCriptografia;
 	}
 
-	@Override
-	public String toString() {
-		return "Usuario [codUsuario=" + codCliente + ", nome=" + nome + ", rua=" + rua + ", numCasa=" + numCasa
-				+ ", bairro=" + bairro + " senha=" + senha
-				+ ", email=" + email + "]";
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	@Override
+	public String toString() {
+		return "Cliente [codCliente=" + codCliente + ", rua=" + rua + ", numCasa=" + numCasa + ", bairro=" + bairro
+				+ ", telefone=" + telefone + ", senhaSemCriptografia=" + senhaSemCriptografia + ", usuario=" + usuario
+				+ "]";
+	}
 }
