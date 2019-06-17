@@ -8,8 +8,22 @@
 	template="/templates/modelo.xhtml">
 
 	<ui:define name="conteudo">
+		<p:dialog header="Vc precisa cadastrar seu endereço!"
+			widgetVar="dialogo1" draggable="false" resizable="false"
+			modal="false" visible="true">
+			<h:panelGrid columns="2">
+				<p:commandButton value="Ok" oncomplete="PF('dialogo').show();"
+					actionListener="#{clienteBean.novo}"
+					action="#{clienteBean.retornaUsuario}"
+					update=":formCadastro:painel">
+					<f:actionListener
+						type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+				</p:commandButton>
+			</h:panelGrid>
+		</p:dialog>
 
-		<p:dialog header="Clientes - Cadastro" widgetVar="dialogo" visible="true"
+
+		<p:dialog header="Clientes - Cadastro" widgetVar="dialogo"
 			draggable="false" resizable="false" modal="false">
 			<h:form id="formCadastro">
 				<h:panelGrid id="painel" columns="2">
@@ -48,7 +62,7 @@
 				<h:panelGrid columns="2">
 					<p:commandButton value="Salvar"
 						actionListener="#{clienteBean.salvar}"
-						update=":mensagem :formCadastro:painel " />
+						update=":mensagem :formCadastro:painel " oncomplete="PF('dialogo').hide();" action="login.xhtml"/>
 					<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
 				</h:panelGrid>
 			</h:form>

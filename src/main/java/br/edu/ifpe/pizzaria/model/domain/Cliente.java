@@ -21,7 +21,7 @@ import javax.persistence.Transient;
 public class Cliente {
 	
 	@Id
-	@Column(name = "cod_cliente", nullable = false)
+	@Column(name = "cod_cliente")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long codCliente;
 	

@@ -33,6 +33,7 @@ public class PedidoBean implements Serializable {
 	private List<PedidoPizza> pedidosPizzas;
 	private List<Pedido> pedidos;
 	private List<Cliente> clientes;
+	private Cliente cliente;
 
 	public Pedido getPedido() {
 		return pedido;
@@ -72,6 +73,14 @@ public class PedidoBean implements Serializable {
 
 	public void setClientes(List<Cliente> clientes) {
 		this.clientes = clientes;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 	@PostConstruct
@@ -188,9 +197,6 @@ public class PedidoBean implements Serializable {
 
 			pedido.setHorario(new Date());
 		
-			ClienteDAO clienteDAO =  new ClienteDAO();
-			clientes = clienteDAO.listar(); 
-			
 
 		} catch (RuntimeException erro) {
 			

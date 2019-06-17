@@ -94,7 +94,7 @@
 			</h:form>
 		</p:dialog>
 
-		<p:dialog header="Faça seu login" widgetVar="primeiroLogin"
+		<p:dialog header="Faça seu 1º login" widgetVar="primeiroLogin"
 			closable="false" draggable="false" resizable="false" modal="true">
 			<h:form id="formLogin1">
 				<h:panelGrid columns="2">
@@ -111,6 +111,7 @@
 
 				<h:panelGrid columns="2">
 					<p:commandButton value="Entrar" update=":mensagem"
+						oncomplete="PF('primeiroLogin').hide();"
 						actionListener="#{loginBean.autenticarPrimeiroLogin}" />
 					<p:commandButton value="Cancelar"
 						oncomplete="PF('primeiroLogin').hide();" />

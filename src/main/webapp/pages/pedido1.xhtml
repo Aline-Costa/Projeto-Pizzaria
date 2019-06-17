@@ -178,13 +178,13 @@
 						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
 					</h:outputText>
 					
-					<p:selectOneMenu value="#{pedidoBean.pedido.codCliente}"
+					<p:outputLabel value="Cliente:" />
+					<h:selectOneRadio id="cliente"
+						value="#{pedidoBean.pedido.codCliente}"
 						converter="omnifaces.SelectItemsConverter" filter="true">
-						<f:selectItem noSelectionOption="true"
-							itemLabel="Selecione um cliente:" />
-						<f:selectItems value="#{pedidoBean.clientes}" var="cliente"
-							itemValue="#{cliente}" itemLabel="#{cliente.usuario.nome}" />
-					</p:selectOneMenu>
+						<f:selectItem itemLabel="#{loginBean.cliente.usuario.nome}"
+							itemValue="#{loginBean.cliente}" />
+					</h:selectOneRadio>
 
 				</h:panelGrid>
 				<h:panelGrid columns="2">

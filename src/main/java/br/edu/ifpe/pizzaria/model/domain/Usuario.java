@@ -18,7 +18,7 @@ import javax.persistence.Table;
 public class Usuario {
 	
 	@Id
-	@Column(name = "cod_usuario", nullable = false)
+	@Column(name = "cod_usuario")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	protected Long codUsuario;
 	

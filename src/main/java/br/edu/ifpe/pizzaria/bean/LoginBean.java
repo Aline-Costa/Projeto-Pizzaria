@@ -23,6 +23,7 @@ public class LoginBean {
 
 	private Usuario usuario;
 	private Usuario usuarioLogado;
+	private Usuario user;
 	private Cliente cliente;
 	private List<Cliente> clientes;
 
@@ -46,12 +47,12 @@ public class LoginBean {
 		usuario = new Usuario();
 	}
 
-	public Cliente getCliente() {
-		return cliente;
+	public Usuario getUser() {
+		return user;
 	}
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setUser(Usuario user) {
+		this.user = user;
 	}
 
 	public List<Cliente> getClientes() {
@@ -62,21 +63,42 @@ public class LoginBean {
 		this.clientes = clientes;
 	}
 
-	public Usuario autenticarUsuario() {
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public void autenticarUsuario() {
 		try {
 			UsuarioDAO usuarioDAO = new UsuarioDAO();
 			usuarioLogado = usuarioDAO.autenticar(usuario.getEmail(), usuario.getSenha());
 			if (usuarioLogado == null) {
 				Messages.addGlobalError("E-mail e/ou senha incorretos");
-				return null;
+				
 			}
+			
+			ClienteDAO clienteDAO = new ClienteDAO();
+			clientes = clienteDAO.listar();
+			
+			user = usuarioDAO.buscarPorCodigo(usuarioLogado.getCodUsuario());
+
+			for (int i = 0; i < clientes.size(); i++) {
+
+				if (user.getCodUsuario() == clientes.get(i).getUsuario().getCodUsuario()) {
+					cliente = clientes.get(i);
+				}
+			}
+			
 			Faces.redirect("./pages/principal.xhtml");
 			
 		} catch (IOException erro) {
 			erro.printStackTrace();
 			Messages.addGlobalError(erro.getMessage());
 		}
-		return usuarioLogado;
+		
 	}
 
 	public void autenticarPrimeiroLogin() {
@@ -87,33 +109,12 @@ public class LoginBean {
 				Messages.addGlobalError("E-mail e/ou senha incorretos");
 				return;
 			}
-			Faces.redirect("./pages/pedido1.xhtml");
-			
+			Faces.redirect("./pages/cliente1.xhtml");	
+
 		} catch (IOException erro) {
 			erro.printStackTrace();
 			Messages.addGlobalError(erro.getMessage());
 		}
-	}
-	
-	public Cliente retornaCliente(){
-		
-		Cliente cliente = new Cliente();
-		ClienteDAO clienteDAO = new ClienteDAO();
-		
-		clientes = clienteDAO.listar();
-	
-		UsuarioDAO usuarioDAO =  new UsuarioDAO();
-		usuario = usuarioDAO.buscarPorCodigo(usuarioLogado.getCodUsuario());
-		
-		for(int i = 0; i < clientes.size(); i++){
-			
-			if(usuario.getCodUsuario() == clientes.get(i).getUsuario().getCodUsuario()){
-				cliente = clientes.get(i);
-			}
-		}
-		
-		return cliente;
-		
 	}
 
 }
