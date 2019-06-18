@@ -20,7 +20,8 @@
 					paginator="true" value="#{pedidoBean.pedidos}" var="pedido"
 					paginatorPosition="bottom">
 
-					<p:column headerText="Horário" filterBy="#{pedido.horario}">
+					<p:column headerText="Horário" filterBy="#{pedido.horario}"
+						sortBy="#{pedido.horario}">
 						<h:outputText value="#{pedido.horario}">
 							<f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy HH:mm"
 								timeZone="America/Sao_Paulo" />
@@ -32,13 +33,49 @@
 							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
 						</h:outputText>
 					</p:column>
-					<p:column headerText="Cliente" filterBy="#{pedido.codCliente.usuario.nome}"
+					<p:column headerText="Cliente"
+						filterBy="#{pedido.codCliente.usuario.nome}"
 						sortBy="#{pedido.codCliente.usuario.nome}">
 						<h:outputText value="#{pedido.codCliente.usuario.nome}" />
 					</p:column>
 
+					<p:column headerText="Código do pedido">
+						<h:outputText value="#{pedido.codPedido}" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+		<h:form id="formLista">
+			<p:panel header="Pedidos - Listagem">
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+					paginator="true" value="#{pedidoBean.pedidosPizzas}"
+					var="pedidoPizza" paginatorPosition="bottom">
+
+					<p:column headerText="Código pedido"
+						filterBy="#{pedidoPizza.pedido.codPedido}"
+						sortBy="#{pedidoPizza.pedido.codPedido}">
+						<h:outputText value="#{pedidoPizza.pedido.codPedido}">
+							<f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy HH:mm"
+								timeZone="America/Sao_Paulo" />
+						</h:outputText>
+					</p:column>
+
 					<p:column headerText="Pizza">
 						<h:outputText value="#{pedidoPizza.pizza.nome}" />
+					</p:column>
+
+					<p:column headerText="Tamanho">
+						<h:outputText value="#{pedidoPizza.pizza.tamanho}" />
+					</p:column>
+
+					<p:column headerText="Preço">
+						<h:outputText value="#{pedidoPizza.preco}">
+							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Quantidade">
+						<h:outputText value="#{pedidoPizza.qtd}" />
 					</p:column>
 				</p:dataTable>
 			</p:panel>
