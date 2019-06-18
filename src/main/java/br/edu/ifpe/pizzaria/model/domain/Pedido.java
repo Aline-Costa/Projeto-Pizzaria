@@ -62,7 +62,7 @@ public class Pedido implements Serializable{
 
 	public Pedido(Long codPedido, Cliente codCliente, List<PedidoBebida> bebidas,
 			List<PedidoPizza> pizzas) {
-		super();
+		
 		this.codPedido = codPedido;
 		this.codCliente = codCliente;
 		this.bebidas = bebidas;

@@ -29,10 +29,12 @@ public class PedidoPizza implements Serializable{
 		
 	}
 
-	public PedidoPizza(Pedido pedido, Pizza pizza) {
-		super();
+	public PedidoPizza(Pedido pedido, Pizza pizza, BigDecimal preco, Long qtd ) {
+		
 		this.pedido = pedido;
 		this.pizza = pizza;
+		this.preco = preco;
+		this.qtd = qtd;
 	}
 
 	public Pedido getPedido() {

@@ -15,6 +15,7 @@ import org.omnifaces.util.Messages;
 
 import br.edu.ifpe.pizzaria.model.dao.ClienteDAO;
 import br.edu.ifpe.pizzaria.model.dao.PedidoDAO;
+import br.edu.ifpe.pizzaria.model.dao.PedidoPizzaDAO;
 import br.edu.ifpe.pizzaria.model.dao.PizzaDAO;
 import br.edu.ifpe.pizzaria.model.domain.Cliente;
 import br.edu.ifpe.pizzaria.model.domain.Pedido;
@@ -34,6 +35,8 @@ public class PedidoBean implements Serializable {
 	private List<Pedido> pedidos;
 	private List<Cliente> clientes;
 	private Cliente cliente;
+	private List<PedidoPizza> listaPedidos;
+	private PedidoPizza pedidoPizza;
 
 	public Pedido getPedido() {
 		return pedido;
@@ -83,6 +86,22 @@ public class PedidoBean implements Serializable {
 		this.cliente = cliente;
 	}
 
+	public List<PedidoPizza> getListaPedidos() {
+		return listaPedidos;
+	}
+
+	public void setListaPedidos(List<PedidoPizza> listaPedidos) {
+		this.listaPedidos = listaPedidos;
+	}
+
+	public PedidoPizza getPedidoPizza() {
+		return pedidoPizza;
+	}
+
+	public void setPedidoPizza(PedidoPizza pedidoPizza) {
+		this.pedidoPizza = pedidoPizza;
+	}
+
 	@PostConstruct
 	public void listar() {
 		try {
@@ -120,6 +139,10 @@ public class PedidoBean implements Serializable {
 		
 		PedidoDAO pedidoDAO = new PedidoDAO();
 		pedidos = pedidoDAO.listar();
+		
+		PedidoPizzaDAO pedidoPizzaDAO = new PedidoPizzaDAO();
+		listaPedidos = pedidoPizzaDAO.listar();
+		
 	}
 
 	public void adicionar(ActionEvent evento) {

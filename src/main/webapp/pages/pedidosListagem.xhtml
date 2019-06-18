@@ -17,11 +17,10 @@
 		<h:form id="formListagem">
 			<p:panel header="Pedidos - Listagem">
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
-					paginator="true" value="#{pedidoBean.pedidos}" var="pedido"
+					paginator="true" value="#{pedidoBean.pedidos}" var="pedido" rows="10"
 					paginatorPosition="bottom">
 
-					<p:column headerText="Horário" filterBy="#{pedido.horario}"
-						sortBy="#{pedido.horario}">
+					<p:column headerText="Horário" sortBy="#{pedido.horario}">
 						<h:outputText value="#{pedido.horario}">
 							<f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy HH:mm"
 								timeZone="America/Sao_Paulo" />
@@ -46,18 +45,22 @@
 			</p:panel>
 		</h:form>
 		<h:form id="formLista">
-			<p:panel header="Pedidos - Listagem">
+			<p:panel header="Pedidos - Detalhes">
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
-					paginator="true" value="#{pedidoBean.pedidosPizzas}"
-					var="pedidoPizza" paginatorPosition="bottom">
+					paginator="true" value="#{pedidoBean.listaPedidos}"
+					var="pedidoPizza" rows="10" paginatorPosition="bottom">
 
 					<p:column headerText="Código pedido"
 						filterBy="#{pedidoPizza.pedido.codPedido}"
 						sortBy="#{pedidoPizza.pedido.codPedido}">
-						<h:outputText value="#{pedidoPizza.pedido.codPedido}">
-							<f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy HH:mm"
-								timeZone="America/Sao_Paulo" />
-						</h:outputText>
+						<h:outputText value="#{pedidoPizza.pedido.codPedido}" />
+					</p:column>
+
+					<p:column headerText="Cliente"
+						filterBy="#{pedidoPizza.pedido.codCliente.usuario.nome}"
+						sortBy="#{pedidoPizza.pedido.codCliente.usuario.nome}">
+						<h:outputText
+							value="#{pedidoPizza.pedido.codCliente.usuario.nome}" />
 					</p:column>
 
 					<p:column headerText="Pizza">
@@ -68,7 +71,7 @@
 						<h:outputText value="#{pedidoPizza.pizza.tamanho}" />
 					</p:column>
 
-					<p:column headerText="Preço">
+					<p:column headerText="Preço Parcial">
 						<h:outputText value="#{pedidoPizza.preco}">
 							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
 						</h:outputText>
