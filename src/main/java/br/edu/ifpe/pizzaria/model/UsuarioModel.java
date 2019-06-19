@@ -38,6 +38,7 @@ public class UsuarioModel {
 		return ret;
 	}
 */
+	@SuppressWarnings("unused")
 	private boolean existeEmail(String email) {
 		boolean ret = false;
 		for (Usuario u : usuarios) {

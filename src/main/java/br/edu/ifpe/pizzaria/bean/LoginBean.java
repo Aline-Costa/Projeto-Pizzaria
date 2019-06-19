@@ -3,7 +3,6 @@ package br.edu.ifpe.pizzaria.bean;
 import java.io.IOException;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -11,12 +10,11 @@ import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
 import br.edu.ifpe.pizzaria.model.dao.ClienteDAO;
-import br.edu.ifpe.pizzaria.model.dao.FuncionarioDAO;
 import br.edu.ifpe.pizzaria.model.dao.UsuarioDAO;
 import br.edu.ifpe.pizzaria.model.domain.Cliente;
-import br.edu.ifpe.pizzaria.model.domain.Funcionario;
 import br.edu.ifpe.pizzaria.model.domain.Usuario;
 
+@SuppressWarnings("deprecation")
 @ManagedBean
 @SessionScoped
 public class LoginBean {

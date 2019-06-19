@@ -15,6 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "funcionario")
 @NamedQueries({@NamedQuery(name = "Funcionario.buscarPorCodigo", query = "SELECT funcionario FROM Funcionario funcionario WHERE funcionario.codFuncionario = :codFuncionario")})

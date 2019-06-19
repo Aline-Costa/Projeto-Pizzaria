@@ -26,24 +26,7 @@
 		</div>
 		<div id="cabecalho">
 			<h:form id="formMenu">
-				<p:menubar>
-					<p:submenu label="Cadastros">
-						<p:menuitem value="Cliente" outcome="/pages/cliente.xhtml" />
-						<p:menuitem value="Funcionário" outcome="/pages/funcionario.xhtml" />
-						<p:menuitem value="Bebida" outcome="/pages/bebida.xhtml" />
-						<p:menuitem value="Pizza" outcome="/pages/pizza.xhtml" />
-						<p:menuitem value="Usuário" outcome="/pages/usuario.xhtml" />
-					</p:submenu>
-
-					<p:submenu label="Movimentações">
-						<p:menuitem value="Pedido" outcome="/pages/pedido.xhtml" />
-						<p:menuitem value="Pedidos" outcome="/pages/pedidosListagem.xhtml" />
-					</p:submenu>
-
-					<p:submenu label="Opções">
-						<p:menuitem value="Sair" outcome="/pages/login.xhtml" />
-					</p:submenu>
-				</p:menubar>
+				<p:menubar model="#{menuBean.modeloMenu}"/>
 			</h:form>
 
 		</div>

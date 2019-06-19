@@ -2,11 +2,9 @@ package br.edu.ifpe.pizzaria.model.dao;
 
 import java.util.List;
 
-import org.apache.shiro.crypto.hash.SimpleHash;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 
 import br.edu.ifpe.pizzaria.model.domain.Cliente;
 import br.edu.ifpe.pizzaria.util.HibernateUtil;

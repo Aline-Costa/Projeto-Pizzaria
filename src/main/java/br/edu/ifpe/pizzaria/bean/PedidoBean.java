@@ -13,18 +13,16 @@ import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
 
-import br.edu.ifpe.pizzaria.model.dao.ClienteDAO;
 import br.edu.ifpe.pizzaria.model.dao.PedidoDAO;
 import br.edu.ifpe.pizzaria.model.dao.PedidoPizzaDAO;
 import br.edu.ifpe.pizzaria.model.dao.PizzaDAO;
 import br.edu.ifpe.pizzaria.model.domain.Cliente;
 import br.edu.ifpe.pizzaria.model.domain.Pedido;
-import br.edu.ifpe.pizzaria.model.domain.PedidoBebida;
 import br.edu.ifpe.pizzaria.model.domain.PedidoPizza;
 import br.edu.ifpe.pizzaria.model.domain.Pizza;
 
 
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "deprecation" })
 @ManagedBean
 @ViewScoped
 public class PedidoBean implements Serializable {

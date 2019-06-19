@@ -21,6 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+@SuppressWarnings("serial")
 @Entity
 @NamedQueries({@NamedQuery(name = "Pedido.buscarPorCodigo", query = "SELECT pedido FROM Pedido pedido WHERE codPedido = :codPedido")})
 public class Pedido implements Serializable{

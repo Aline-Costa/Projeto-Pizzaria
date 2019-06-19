@@ -6,7 +6,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-import br.edu.ifpe.pizzaria.model.domain.Cliente;
 import br.edu.ifpe.pizzaria.model.domain.Usuario;
 import br.edu.ifpe.pizzaria.util.HibernateUtil;
 

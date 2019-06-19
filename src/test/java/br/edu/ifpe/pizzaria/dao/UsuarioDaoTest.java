@@ -16,8 +16,9 @@ public class UsuarioDaoTest {
 	@Test
 	public void salvar() {
 		
-		Cliente u2 = new Cliente();
-
+		
+/*
+ 		Cliente u2 = new Cliente();
 		u2.setNome("Eduarda Campos");
 		u2.setRua("E");
 		u2.setNumCasa(15L);
@@ -34,7 +35,7 @@ public class UsuarioDaoTest {
 		ClienteDAO u2DAO = new ClienteDAO();
 		u2DAO.salvar(u2);
 
-		/*
+		
 		Usuario u3 = new Usuario();
 
 		u3.setNome("Pedro Santos");
@@ -48,7 +49,7 @@ public class UsuarioDaoTest {
 		UsuarioDAO u3DAO = new UsuarioDAO();
 		u3DAO.salvar(u3);
 		
-		*/
+		
 	}
 	
 	@SuppressWarnings("unused")
@@ -105,5 +106,7 @@ public class UsuarioDaoTest {
 			usuarioDAO.editar(usuario);	
 		
 		}
+*/
 	}
+
 }
