@@ -9,7 +9,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import org.omnifaces.util.Messages;
 
-
 import br.edu.ifpe.pizzaria.model.dao.FuncionarioDAO;
 import br.edu.ifpe.pizzaria.model.dao.UsuarioDAO;
 import br.edu.ifpe.pizzaria.model.domain.Funcionario;
@@ -23,8 +22,6 @@ public class FuncionarioBean implements Serializable {
 	private Funcionario funcionario;
 	private List<Funcionario> funcionarios;
 	private List<Usuario> usuarios;
-	
-
 
 	public Funcionario getFuncionario() {
 		return funcionario;
@@ -96,9 +93,9 @@ public class FuncionarioBean implements Serializable {
 			erro.printStackTrace();
 		}
 	}
-	
-	public void editar(ActionEvent evento){
-		
+
+	public void editar(ActionEvent evento) {
+
 		try {
 			funcionario = (Funcionario) evento.getComponent().getAttributes().get("funcionarioSelecionado");
 
@@ -110,11 +107,11 @@ public class FuncionarioBean implements Serializable {
 			Messages.addFlashGlobalError("Ocorreu um erro ao editar o funcionário!");
 			erro.printStackTrace();
 		}
-		
+
 	}
-	
-	public void retornaUsuario(){
-		
+
+	public void retornaUsuario() {
+
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		usuarios = usuarioDAO.listar();
 

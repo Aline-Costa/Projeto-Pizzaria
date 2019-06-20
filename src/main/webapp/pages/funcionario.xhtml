@@ -15,7 +15,8 @@
 					var="funcionario" rows="5" paginatorPosition="bottom">
 					<f:facet name="footer">
 						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
-							actionListener="#{funcionarioBean.novo}" action="#{funcionarioBean.retornaUsuario}"
+							actionListener="#{funcionarioBean.novo}"
+							action="#{funcionarioBean.retornaUsuario}"
 							update=":formCadastro:painel">
 							<f:actionListener
 								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
@@ -71,9 +72,8 @@
 		<p:dialog header="Funcionários - Cadastro" widgetVar="dialogo"
 			draggable="false" resizable="false" modal="false">
 			<h:form id="formCadastro">
-				<h:panelGrid id="painel" columns="2">
+				<h:panelGrid id="painel" columns="1">
 					<p:outputLabel value="Usuário:" />
-					
 
 					<p:selectOneMenu value="#{funcionarioBean.funcionario.usuario}"
 						converter="omnifaces.SelectItemsConverter" filter="true">
@@ -83,10 +83,11 @@
 							itemValue="#{usuario}" itemLabel="#{usuario.nome}" />
 					</p:selectOneMenu>
 
-					<p:outputLabel value="Função:" />
-					<p:inputText maxlength="30" size="10"
-						value="#{funcionarioBean.funcionario.funcao}" required="true"
-						requiredMessage="O campo 'Função' é obrigatório!" />
+					<h:selectOneRadio id="Função"
+						value="#{funcionarioBean.funcionario.funcao}">
+						<f:selectItem itemLabel="Atendente" itemValue="Atendente" />
+						<f:selectItem itemLabel="Gerente" itemValue="Gerente" />
+					</h:selectOneRadio>
 
 				</h:panelGrid>
 

@@ -129,7 +129,6 @@ public class LoginBean {
 					cliente = clientes.get(i);
 				}
 			}
-
 			if (cliente != null) {
 
 				for (Menu menu : lista) {
@@ -201,6 +200,7 @@ public class LoginBean {
 				}
 
 			}
+
 			Faces.redirect("./pages/principal.xhtml");
 
 		} catch (IOException erro) {
