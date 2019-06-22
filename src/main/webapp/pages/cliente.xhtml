@@ -91,9 +91,9 @@
 
 					<h:selectOneRadio id="usuario"
 						value="#{clienteBean.cliente.usuario}"
-						converter="omnifaces.SelectItemsConverter" filter="true">
-						<f:selectItem 
-							itemLabel="#{loginBean.usuarioLogado.nome}"
+						converter="omnifaces.SelectItemsConverter" filter="true"
+						required="true" requiredMessage="Selecione o nome do usuário!">
+						<f:selectItem itemLabel="#{loginBean.usuarioLogado.nome}"
 							itemValue="#{loginBean.usuarioLogado}" />
 					</h:selectOneRadio>
 
@@ -123,7 +123,7 @@
 					<p:commandButton value="Salvar"
 						actionListener="#{clienteBean.salvar}"
 						update=":mensagem :formCadastro:painel " />
-					<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();"/>
+					<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

@@ -16,8 +16,7 @@
 	<ui:define name="conteudo">
 
 		<h2 style="color: #990000">
-			<h:outputText
-				value="Bem-vindo ao Fast Pizza, #{loginBean.usuarioLogado.nome}!" />
+			<h:outputText value="Selecione as pizzas desejadas" />
 		</h2>
 		<h:form id="formulario">
 			<p:panel header="Pizzas">
@@ -128,17 +127,27 @@
 
 					<h:selectOneRadio id="cliente"
 						value="#{pedidoBean.pedido.codCliente}"
-						converter="omnifaces.SelectItemsConverter" filter="true">
+						converter="omnifaces.SelectItemsConverter" filter="true"
+						required="true" requiredMessage="Selecione o nome do cliente!">
 						<f:selectItem itemLabel="#{loginBean.cliente.usuario.nome}"
 							itemValue="#{loginBean.cliente}" />
+					</h:selectOneRadio>
+
+					<p:outputLabel value="Forma de Pagamento:" />
+					<h:selectOneRadio id="pagamento"
+						value="#{pedidoBean.pedido.formaPag}"
+						converter="omnifaces.SelectItemsConverter" filter="true"
+						required="true" requiredMessage="Selecione a forma de pagamento!">
+						<f:selectItem itemLabel="À vista" itemValue="Á vista" />
+						<f:selectItem itemLabel="Crédito" itemValue="Crédito" />
+						<f:selectItem itemLabel="Débito" itemValue="Débito" />
 					</h:selectOneRadio>
 
 				</h:panelGrid>
 				<h:panelGrid columns="2">
 					<p:commandButton value="Salvar"
 						actionListener="#{pedidoBean.salvar}"
-						update=":mensagem :formulario:tabelaPizza :formulario:tabelaCesta formulario:painelFinalizacao"
-						oncomplete="PF('dialogo').hide();" />
+						update=":mensagem :formulario:tabelaPizza :formulario:tabelaCesta formulario:painelFinalizacao" />
 					<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
 				</h:panelGrid>
 			</h:form>

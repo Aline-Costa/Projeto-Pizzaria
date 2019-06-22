@@ -90,7 +90,8 @@
 					</p:inputText>
 
 					<p:outputLabel value="Tamanho:" />
-					<h:selectOneRadio id="Tamanho" value="#{pizzaBean.pizza.tamanho}">
+					<h:selectOneRadio id="Tamanho" value="#{pizzaBean.pizza.tamanho}"
+						required="true" requiredMessage="Selecione o tamanho da pizza!">
 						<f:selectItem itemLabel="P" itemValue="P" />
 						<f:selectItem itemLabel="M" itemValue="M" />
 						<f:selectItem itemLabel="G" itemValue="G" />

@@ -19,17 +19,14 @@
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
 					paginator="true" value="#{pedidoBean.pedidos}" var="pedido" rows="10"
 					paginatorPosition="bottom">
-
+					
+					<p:column headerText="Código do pedido">
+						<h:outputText value="#{pedido.codPedido}" />
+					</p:column>
 					<p:column headerText="Horário" sortBy="#{pedido.horario}">
 						<h:outputText value="#{pedido.horario}">
 							<f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy HH:mm"
 								timeZone="America/Sao_Paulo" />
-						</h:outputText>
-
-					</p:column>
-					<p:column headerText="Preço Total">
-						<h:outputText value="#{pedido.valorTotal}">
-							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
 						</h:outputText>
 					</p:column>
 					<p:column headerText="Cliente"
@@ -37,9 +34,13 @@
 						sortBy="#{pedido.codCliente.usuario.nome}">
 						<h:outputText value="#{pedido.codCliente.usuario.nome}" />
 					</p:column>
-
-					<p:column headerText="Código do pedido">
-						<h:outputText value="#{pedido.codPedido}" />
+					<p:column headerText="Preço Total">
+						<h:outputText value="#{pedido.valorTotal}">
+							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Forma de Pagamento">
+						<h:outputText value="#{pedido.formaPag}" />
 					</p:column>
 				</p:dataTable>
 			</p:panel>

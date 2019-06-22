@@ -1,6 +1,5 @@
 package br.edu.ifpe.pizzaria.model.domain;
 
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -23,47 +22,41 @@ import javax.persistence.TemporalType;
 
 @SuppressWarnings("serial")
 @Entity
-@NamedQueries({@NamedQuery(name = "Pedido.buscarPorCodigo", query = "SELECT pedido FROM Pedido pedido WHERE codPedido = :codPedido")})
-public class Pedido implements Serializable{
-	
+@NamedQueries({
+		@NamedQuery(name = "Pedido.buscarPorCodigo", query = "SELECT pedido FROM Pedido pedido WHERE codPedido = :codPedido") })
+public class Pedido implements Serializable {
+
 	@Id
-	@Column(name = "cod_pedido", nullable = false)
+	@Column(name = "cod_pedido")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long codPedido;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "cod_cliente", referencedColumnName = "cod_cliente", nullable = false)
 	private Cliente codCliente;
-	
+
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date horario;
 
-	
 	@Column(name = "valor_total", precision = 7, scale = 2)
 	private BigDecimal valorTotal;
-	
-	@OneToMany(
-			mappedBy = "pedido",
-			cascade = CascadeType.ALL,
-			orphanRemoval = true
-		)
+
+	@Column(name = "forma_pagamento", nullable = false)
+	private String formaPag;
+
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<PedidoBebida> bebidas = new ArrayList<>();
-	
-	@OneToMany(
-			mappedBy = "pedido",
-			cascade = CascadeType.ALL,
-			orphanRemoval = true
-		)
+
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<PedidoPizza> pizzas = new ArrayList<>();
-	
-	public Pedido(){
-		
+
+	public Pedido() {
+
 	}
 
-	public Pedido(Long codPedido, Cliente codCliente, List<PedidoBebida> bebidas,
-			List<PedidoPizza> pizzas) {
-		
+	public Pedido(Long codPedido, Cliente codCliente, List<PedidoBebida> bebidas, List<PedidoPizza> pizzas) {
+
 		this.codPedido = codPedido;
 		this.codCliente = codCliente;
 		this.bebidas = bebidas;
@@ -117,5 +110,13 @@ public class Pedido implements Serializable{
 	public void setPizzas(List<PedidoPizza> pizzas) {
 		this.pizzas = pizzas;
 	}
-	
+
+	public String getFormaPag() {
+		return formaPag;
+	}
+
+	public void setFormaPag(String formaPag) {
+		this.formaPag = formaPag;
+	}
+
 }

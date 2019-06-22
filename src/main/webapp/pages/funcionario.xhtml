@@ -76,7 +76,8 @@
 					<p:outputLabel value="Usuário:" />
 
 					<p:selectOneMenu value="#{funcionarioBean.funcionario.usuario}"
-						converter="omnifaces.SelectItemsConverter" filter="true">
+						converter="omnifaces.SelectItemsConverter" filter="true"
+						required="true" requiredMessage="Selecione o nome do usuário!">
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione um usuário:" />
 						<f:selectItems value="#{funcionarioBean.usuarios}" var="usuario"
@@ -84,7 +85,8 @@
 					</p:selectOneMenu>
 
 					<h:selectOneRadio id="Função"
-						value="#{funcionarioBean.funcionario.funcao}">
+						value="#{funcionarioBean.funcionario.funcao}" required="true"
+						requiredMessage="Selecione a função do funcionário!">
 						<f:selectItem itemLabel="Atendente" itemValue="Atendente" />
 						<f:selectItem itemLabel="Gerente" itemValue="Gerente" />
 					</h:selectOneRadio>

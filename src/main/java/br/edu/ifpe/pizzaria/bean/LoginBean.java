@@ -35,6 +35,7 @@ public class LoginBean {
 	private MenuModel modeloMenu;
 	private List<Funcionario> funcionarios;
 	private Funcionario funcionario;
+	private String primeiroNome;
 
 	public Usuario getUsuario() {
 		return usuario;
@@ -104,6 +105,14 @@ public class LoginBean {
 		this.funcionario = funcionario;
 	}
 
+	public String getPrimeiroNome() {
+		return primeiroNome;
+	}
+
+	public void setPrimeiroNome(String primeiroNome) {
+		this.primeiroNome = primeiroNome;
+	}
+
 	public void autenticarUsuario() {
 		try {
 
@@ -113,10 +122,13 @@ public class LoginBean {
 
 			UsuarioDAO usuarioDAO = new UsuarioDAO();
 			usuarioLogado = usuarioDAO.autenticar(usuario.getEmail(), usuario.getSenha());
+
 			if (usuarioLogado == null) {
 				Messages.addGlobalError("E-mail e/ou senha incorretos");
 
 			}
+
+			primeiroNome = usuarioLogado.getNome().split(" ")[0];
 
 			ClienteDAO clienteDAO = new ClienteDAO();
 			clientes = clienteDAO.listar();
@@ -127,6 +139,7 @@ public class LoginBean {
 
 				if (user.getCodUsuario() == clientes.get(i).getUsuario().getCodUsuario()) {
 					cliente = clientes.get(i);
+
 				}
 			}
 			if (cliente != null) {
