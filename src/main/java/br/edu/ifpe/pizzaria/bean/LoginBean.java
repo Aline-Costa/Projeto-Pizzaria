@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
@@ -115,7 +116,7 @@ public class LoginBean {
 
 	public void autenticarUsuario() {
 		try {
-
+		
 			MenuDAO menuDAO = new MenuDAO();
 			List<Menu> lista = menuDAO.listar();
 			modeloMenu = new DefaultMenuModel();
@@ -127,7 +128,8 @@ public class LoginBean {
 				Messages.addGlobalError("E-mail e/ou senha incorretos");
 
 			}
-
+			
+			FacesContext context = FacesContext.getCurrentInstance();
 			primeiroNome = usuarioLogado.getNome().split(" ")[0];
 
 			ClienteDAO clienteDAO = new ClienteDAO();
@@ -159,7 +161,9 @@ public class LoginBean {
 						}
 						modeloMenu.addElement(subMenu);
 					}
+					
 				}
+				
 			}
 
 			if (cliente == null) {
@@ -238,5 +242,10 @@ public class LoginBean {
 			Messages.addGlobalError(erro.getMessage());
 		}
 	}
+	
+	public void deslogar() throws IOException{
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        Faces.redirect("./pages/login.xhtml");
+    }
 
 }

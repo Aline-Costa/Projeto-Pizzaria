@@ -31,10 +31,6 @@
 						<h:outputText value="#{usuario.email}" />
 					</p:column>
 
-					<p:column headerText="Senha">
-						<h:outputText value="#{usuario.senha}" />
-					</p:column>
-
 					<p:column headerText="Opções">
 						<p:commandButton icon="ui-icon-trash"
 							actionListener="#{usuarioBean.excluir}"
@@ -68,15 +64,19 @@
 			<h:form id="formCadastro">
 				<h:panelGrid id="painel" columns="2">
 					<p:outputLabel value="Nome:" />
-					<p:inputText maxlength="100" size="30"
+					<p:inputText maxlength="100" size="30" id="email"
 						value="#{usuarioBean.usuario.nome}" required="true"
 						requiredMessage="O campo 'Nome' é obrigatório!" />
 
 					<p:outputLabel value="E-mail:" />
 					<p:inputText maxlength="50" size="30"
 						value="#{usuarioBean.usuario.email}" required="true"
-						requiredMessage="O campo 'E-mail' é obrigatório!" />
+						requiredMessage="O campo 'E-mail' é obrigatório!"
+						validatorMessage="Informe um email válido!">
+						<f:validateRegex
+							pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 
+					</p:inputText>
 					<p:outputLabel value="Senha:" />
 					<p:password maxlength="8" size="10"
 						value="#{usuarioBean.usuario.senha}" required="true"

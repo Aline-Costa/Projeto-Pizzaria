@@ -10,7 +10,8 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Fast Pizza</title>
 	<h:outputStylesheet library="css" name="style.css" />
-	<link rel="shortcut icon" href="../resources/images/pizza7.png" type="image/x-icon" />
+	<link rel="shortcut icon" href="../resources/images/pizza7.png"
+		type="image/x-icon" />
 </h:head>
 <h:body>
 	<p:growl id="mensagem" />
@@ -26,7 +27,11 @@
 		</div>
 		<div id="cabecalho">
 			<h:form id="formMenu">
-				<p:menubar model="#{loginBean.modeloMenu}"/>
+
+				<p:menubar model="#{loginBean.modeloMenu}" />
+				<p:commandButton value="Sair" style="margin-left:1445px; margin-top:5px;" 
+					actionListener="#{loginBean.deslogar}" />
+
 			</h:form>
 
 		</div>
