@@ -1,5 +1,7 @@
 package br.edu.ifpe.pizzaria.model.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +17,7 @@ import javax.persistence.Table;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "usuario")
 @NamedQueries({@NamedQuery(name = "Usuario.buscarPorCodigo", query = "SELECT usuario FROM Usuario usuario WHERE usuario.codUsuario = :codUsuario")})
-public class Usuario {
+public class Usuario implements Serializable{
 	
 	@Id
 	@Column(name = "cod_usuario")
