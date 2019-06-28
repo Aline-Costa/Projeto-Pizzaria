@@ -13,14 +13,6 @@
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
 					paginator="true" value="#{usuarioBean.usuarios}" var="usuario"
 					rows="5" paginatorPosition="bottom">
-					<f:facet name="footer">
-						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
-							actionListener="#{usuarioBean.novo}"
-							update=":formCadastro:painel">
-							<f:actionListener
-								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
-						</p:commandButton>
-					</f:facet>
 
 					<p:column headerText="Nome" sortBy="#{usuario.nome}"
 						filterBy="#{usuario.nome}">

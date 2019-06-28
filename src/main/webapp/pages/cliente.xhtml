@@ -24,9 +24,9 @@
 						</p:commandButton>
 					</f:facet>
 
-					<p:column headerText="Nome" sortBy="#{cliente.usuario.nome}"
-						filterBy="#{cliente.usuario.nome}">
-						<h:outputText value="#{cliente.usuario.nome}" />
+					<p:column headerText="Nome" sortBy="#{cliente.nome}"
+						filterBy="#{cliente.nome}">
+						<h:outputText value="#{cliente.nome}" />
 					</p:column>
 
 					<p:column headerText="Rua">
@@ -46,7 +46,7 @@
 					</p:column>
 
 					<p:column headerText="E-mail">
-						<h:outputText value="#{cliente.usuario.email}" />
+						<h:outputText value="#{cliente.email}" />
 					</p:column>
 
 					<p:column headerText="Opções">
@@ -81,16 +81,24 @@
 			draggable="false" resizable="false" modal="false">
 			<h:form id="formCadastro">
 				<h:panelGrid id="painel" columns="2">
+					<p:outputLabel value="Nome:" />
+					<p:inputText maxlength="100" size="30" id="email"
+						value="#{clienteBean.cliente.nome}" required="true"
+						requiredMessage="O campo 'Nome' é obrigatório!" />
 
-					<p:outputLabel value="Usuário:" />
+					<p:outputLabel value="E-mail:" />
+					<p:inputText maxlength="50" size="30"
+						value="#{clienteBean.cliente.email}" required="true"
+						requiredMessage="O campo 'E-mail' é obrigatório!"
+						validatorMessage="Informe um email válido!">
+						<f:validateRegex
+							pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 
-					<h:selectOneRadio id="usuario"
-						value="#{clienteBean.cliente.usuario}"
-						converter="omnifaces.SelectItemsConverter" filter="true"
-						required="true" requiredMessage="Selecione o nome do usuário!">
-						<f:selectItem itemLabel="#{loginBean.usuarioLogado.nome}"
-							itemValue="#{loginBean.usuarioLogado}" />
-					</h:selectOneRadio>
+					</p:inputText>
+					<p:outputLabel value="Senha:" />
+					<p:password maxlength="8" size="10"
+						value="#{clienteBean.cliente.senha}" required="true"
+						requiredMessage="O campo 'Senha' é obrigatório!" />
 
 					<p:outputLabel value="Rua:" />
 					<p:inputText maxlength="50" size="30"

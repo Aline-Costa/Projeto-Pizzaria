@@ -100,7 +100,7 @@ public class ClienteBean implements Serializable {
 
 			novo();
 			clientes = clienteDao.listar();
-			Messages.addGlobalInfo("Cliente salvo com sucesso!");
+			Messages.addGlobalInfo("Cadastro realizado com sucesso! Faça seu login!");
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao salvar o cliente!");
 			erro.printStackTrace();

@@ -44,7 +44,7 @@
 				</p:commandButton>
 				<p:commandButton value="Cadastre-se!"
 					oncomplete="PF('dialogo2').show();"
-					actionListener="#{usuarioBean.novo}" update=":formCadastro:painel">
+					actionListener="#{clienteBean.novo}" update=":formCadastro:painel">
 					<f:actionListener
 						type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 				</p:commandButton>
@@ -94,59 +94,56 @@
 		</h:form>
 	</p:dialog>
 
-	<p:dialog header="Faça seu 1º login" widgetVar="primeiroLogin"
-		closable="false" draggable="false" resizable="false" modal="true">
-		<h:form id="formLogin1">
-			<h:panelGrid columns="2">
-				<p:outputLabel for="email" value="E-mail:" />
-				<p:inputText id="email" size="20" required="true"
-					requiredMessage="O campo E-mail é obrigatório"
-					value="#{loginBean.usuario.email}" />
-
-				<p:outputLabel for="senha" value="Senha:" />
-				<p:password id="senha" maxlength="8" size="20" required="true"
-					requiredMessage="O campo Senha é obrigatório"
-					value="#{loginBean.usuario.senha}" />
-			</h:panelGrid>
-
-			<h:panelGrid columns="2">
-				<p:commandButton value="Entrar" update=":mensagem"
-					oncomplete="PF('primeiroLogin').hide();"
-					actionListener="#{loginBean.autenticarPrimeiroLogin}" />
-				<p:commandButton value="Cancelar"
-					oncomplete="PF('primeiroLogin').hide();" />
-			</h:panelGrid>
-		</h:form>
-	</p:dialog>
-
 	<p:dialog header="Cadastre-se para fazer o pedido" widgetVar="dialogo2"
 		draggable="false" resizable="false" modal="false">
 		<h:form id="formCadastro">
 			<h:panelGrid id="painel" columns="2">
 				<p:outputLabel value="Nome:" />
-				<p:inputText maxlength="100" size="30"
-					value="#{usuarioBean.usuario.nome}" required="true"
+				<p:inputText maxlength="100" size="30" id="email"
+					value="#{clienteBean.cliente.nome}" required="true"
 					requiredMessage="O campo 'Nome' é obrigatório!" />
 
 				<p:outputLabel value="E-mail:" />
 				<p:inputText maxlength="50" size="30"
-					value="#{usuarioBean.usuario.email}" required="true"
-					requiredMessage="O campo 'E-mail' é obrigatório!" />
+					value="#{clienteBean.cliente.email}" required="true"
+					requiredMessage="O campo 'E-mail' é obrigatório!"
+					validatorMessage="Informe um email válido!">
+					<f:validateRegex
+						pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 
+				</p:inputText>
 				<p:outputLabel value="Senha:" />
 				<p:password maxlength="8" size="10"
-					value="#{usuarioBean.usuario.senha}" required="true"
+					value="#{clienteBean.cliente.senha}" required="true"
 					requiredMessage="O campo 'Senha' é obrigatório!" />
+
+				<p:outputLabel value="Rua:" />
+				<p:inputText maxlength="50" size="30"
+					value="#{clienteBean.cliente.rua}" required="true"
+					requiredMessage="O campo 'Rua' é obrigatório!" />
+
+				<p:outputLabel value="Nº da casa:" />
+				<p:inputText maxlength="10" size="15"
+					value="#{clienteBean.cliente.numCasa}" required="true"
+					requiredMessage="O campo 'Nº da casa' é obrigatório!" />
+
+				<p:outputLabel value="Bairro:" />
+				<p:inputText maxlength="50" size="30"
+					value="#{clienteBean.cliente.bairro}" required="true"
+					requiredMessage="O campo 'Bairro' é obrigatório!" />
+
+				<p:outputLabel value="Telefone:" />
+				<p:inputMask id="telefone" mask="(99)99999-9999" maxlength="14"
+					size="16" value="#{clienteBean.cliente.telefone}" required="true"
+					requiredMessage="O campo 'Telefone' é obrigatório!" />
 
 			</h:panelGrid>
 
 			<h:panelGrid columns="2">
-				<p:commandButton value="Salvar"
-					actionListener="#{usuarioBean.salvar}"
-					oncomplete="PF('primeiroLogin').show();"
-					update=":mensagem :formCadastro:painel" />
-				<p:commandButton value="Cancelar"
-					oncomplete="PF('dialogo2').hide();" />
+				<p:commandButton value="Salvar" 
+					actionListener="#{clienteBean.salvar}"
+					update=":mensagem :formCadastro:painel " />
+				<p:commandButton value="Fechar" oncomplete="PF('dialogo2').hide();" />
 			</h:panelGrid>
 
 		</h:form>

@@ -1,5 +1,6 @@
 package br.edu.ifpe.pizzaria.model.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 @NamedQueries({@NamedQuery(name = "Pizza.buscarPorCodigo", query = "SELECT pizza FROM Pizza pizza WHERE pizza.codPizza = :codPizza")})
-public class Pizza {
+public class Pizza implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

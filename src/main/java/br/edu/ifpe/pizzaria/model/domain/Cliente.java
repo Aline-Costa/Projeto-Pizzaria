@@ -1,5 +1,7 @@
 package br.edu.ifpe.pizzaria.model.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,53 +12,52 @@ import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+@SuppressWarnings("serial")
 @Entity
-
+@PrimaryKeyJoinColumn(name="codUsuario")
 @Table(name = "cliente")
-@NamedQueries({@NamedQuery(name = "Cliente.buscarPorCodigo", query = "SELECT cliente FROM Cliente cliente WHERE cliente.codCliente = :codCliente"), @NamedQuery(name = "Cliente.buscarPorCodUsuario", query = "SELECT cliente FROM Cliente cliente WHERE cliente.usuario = :codUsuario")})
-public class Cliente {
+@NamedQueries({
+		@NamedQuery(name = "Cliente.buscarPorCodigo", query = "SELECT cliente FROM Cliente cliente WHERE cliente.codCliente = :codCliente"), })
+public class Cliente extends Usuario implements Serializable {
+
 	
-	@Id
 	@Column(name = "cod_cliente")
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long codCliente;
-	
+
 	@Column(name = "rua", length = 50, nullable = false)
 	private String rua;
-	
+
 	@Column(name = "num_casa", nullable = false)
 	private Long numCasa;
-	
+
 	@Column(name = "bairro", length = 50, nullable = false)
 	private String bairro;
-	
+
 	@Column(name = "telefone", length = 50, nullable = false)
 	private String telefone;
-	
+
 	@Transient
 	private String senhaSemCriptografia;
-	
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "cod_usuario", referencedColumnName = "cod_usuario", nullable = false)
-	private Usuario usuario;
 
-	public Cliente(){
-		
+	public Cliente() {
+
 	}
-	
-	public Cliente(String rua, Long numCasa, String bairro, String telefone, Usuario usuario){
-		
+
+	public Cliente(Long codUsuario, String nome, String email, String senha, Long codCliente, String rua, Long numCasa,
+			String bairro, String telefone, String senhaSemCriptografia) {
+		super(nome, email, senha);
+		this.codCliente = codCliente;
 		this.rua = rua;
 		this.numCasa = numCasa;
 		this.bairro = bairro;
 		this.telefone = telefone;
-		this.usuario = usuario;
-		
+		this.senhaSemCriptografia = senhaSemCriptografia;
 	}
-	
+
 	public Long getCodCliente() {
 		return codCliente;
 	}
@@ -105,18 +106,4 @@ public class Cliente {
 		this.senhaSemCriptografia = senhaSemCriptografia;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	@Override
-	public String toString() {
-		return "Cliente [codCliente=" + codCliente + ", rua=" + rua + ", numCasa=" + numCasa + ", bairro=" + bairro
-				+ ", telefone=" + telefone + ", senhaSemCriptografia=" + senhaSemCriptografia + ", usuario=" + usuario
-				+ "]";
-	}
 }

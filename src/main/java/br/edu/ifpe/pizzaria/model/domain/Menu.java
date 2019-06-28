@@ -1,5 +1,6 @@
 package br.edu.ifpe.pizzaria.model.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -15,11 +16,11 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 @Entity
-public class Menu {
+public class Menu implements Serializable{
 	
 	@Id
 	@Column
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	@Column (length = 50, nullable = false)

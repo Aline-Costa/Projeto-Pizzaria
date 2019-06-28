@@ -125,7 +125,7 @@
 						value="#{pedidoBean.pedido.codCliente}"
 						converter="omnifaces.SelectItemsConverter" filter="true"
 						required="true" requiredMessage="Selecione o nome do cliente!">
-						<f:selectItem itemLabel="#{loginBean.cliente.usuario.nome}"
+						<f:selectItem itemLabel="#{loginBean.cliente.nome}"
 							itemValue="#{loginBean.cliente}" />
 					</h:selectOneRadio>
 

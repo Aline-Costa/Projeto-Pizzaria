@@ -23,9 +23,9 @@
 						</p:commandButton>
 					</f:facet>
 
-					<p:column headerText="Nome" sortBy="#{funcionario.usuario.nome}"
-						filterBy="#{funcionario.usuario.nome}">
-						<h:outputText value="#{funcionario.usuario.nome}" />
+					<p:column headerText="Nome" sortBy="#{funcionario.nome}"
+						filterBy="#{funcionario.nome}">
+						<h:outputText value="#{funcionario.nome}" />
 					</p:column>
 
 					<p:column headerText="Função">
@@ -33,7 +33,7 @@
 					</p:column>
 
 					<p:column headerText="E-mail">
-						<h:outputText value="#{funcionario.usuario.email}" />
+						<h:outputText value="#{funcionario.email}" />
 					</p:column>
 
 					<p:column headerText="Opções">
@@ -67,17 +67,25 @@
 		<p:dialog header="Funcionários - Cadastro" widgetVar="dialogo"
 			draggable="false" resizable="false" modal="false">
 			<h:form id="formCadastro">
-				<h:panelGrid id="painel" columns="1">
-					<p:outputLabel value="Usuário:" />
+				<h:panelGrid id="painel" columns="2">
+					<p:outputLabel value="Nome:" />
+					<p:inputText maxlength="100" size="30"
+						value="#{funcionarioBean.funcionario.nome}" required="true"
+						requiredMessage="O campo 'Nome' é obrigatório!" />
 
-					<p:selectOneMenu value="#{funcionarioBean.funcionario.usuario}"
-						converter="omnifaces.SelectItemsConverter" filter="true"
-						required="true" requiredMessage="Selecione o nome do usuário!">
-						<f:selectItem noSelectionOption="true"
-							itemLabel="Selecione um usuário:" />
-						<f:selectItems value="#{funcionarioBean.usuarios}" var="usuario"
-							itemValue="#{usuario}" itemLabel="#{usuario.nome}" />
-					</p:selectOneMenu>
+					<p:outputLabel value="E-mail:" />
+					<p:inputText maxlength="50" size="30"
+						value="#{funcionarioBean.funcionario.email}" required="true"
+						requiredMessage="O campo 'E-mail' é obrigatório!"
+						validatorMessage="Informe um email válido!">
+						<f:validateRegex
+							pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+
+					</p:inputText>
+					<p:outputLabel value="Senha:" />
+					<p:password maxlength="8" size="10"
+						value="#{funcionarioBean.funcionario.senha}" required="true"
+						requiredMessage="O campo 'Senha' é obrigatório!" />
 
 					<h:selectOneRadio id="Função"
 						value="#{funcionarioBean.funcionario.funcao}" required="true"

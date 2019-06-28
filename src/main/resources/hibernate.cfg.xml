@@ -32,8 +32,8 @@
 		<property name="hbm2ddl.auto">update</property>
 
 		<property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
-		
-		 <mapping class="br.edu.ifpe.pizzaria.model.domain.Pedido" />
+
+		<mapping class="br.edu.ifpe.pizzaria.model.domain.Pedido" />
 		<mapping class="br.edu.ifpe.pizzaria.model.domain.Cliente" />
 		<mapping class="br.edu.ifpe.pizzaria.model.domain.Funcionario" />
 		<mapping class="br.edu.ifpe.pizzaria.model.domain.Bebida" />
@@ -42,8 +42,8 @@
 		<mapping class="br.edu.ifpe.pizzaria.model.domain.Pizza" />
 		<mapping class="br.edu.ifpe.pizzaria.model.domain.Usuario" />
 		<mapping class="br.edu.ifpe.pizzaria.model.domain.Menu" />
-	
-		
+
+
 	</session-factory>
 
 </hibernate-configuration>

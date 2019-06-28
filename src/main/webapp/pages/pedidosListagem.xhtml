@@ -30,9 +30,9 @@
 						</h:outputText>
 					</p:column>
 					<p:column headerText="Cliente"
-						filterBy="#{pedido.codCliente.usuario.nome}"
-						sortBy="#{pedido.codCliente.usuario.nome}">
-						<h:outputText value="#{pedido.codCliente.usuario.nome}" />
+						filterBy="#{pedido.codCliente.nome}"
+						sortBy="#{pedido.codCliente.nome}">
+						<h:outputText value="#{pedido.codCliente.nome}" />
 					</p:column>
 					<p:column headerText="Preço Total">
 						<h:outputText value="#{pedido.valorTotal}">
@@ -58,10 +58,10 @@
 					</p:column>
 
 					<p:column headerText="Cliente"
-						filterBy="#{pedidoPizza.pedido.codCliente.usuario.nome}"
-						sortBy="#{pedidoPizza.pedido.codCliente.usuario.nome}">
+						filterBy="#{pedidoPizza.pedido.codCliente.nome}"
+						sortBy="#{pedidoPizza.pedido.codCliente.nome}">
 						<h:outputText
-							value="#{pedidoPizza.pedido.codCliente.usuario.nome}" />
+							value="#{pedidoPizza.pedido.codCliente.nome}" />
 					</p:column>
 
 					<p:column headerText="Pizza">

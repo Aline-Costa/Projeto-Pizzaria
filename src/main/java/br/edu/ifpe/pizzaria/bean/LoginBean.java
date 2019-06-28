@@ -139,7 +139,7 @@ public class LoginBean {
 
 			for (int i = 0; i < clientes.size(); i++) {
 
-				if (user.getCodUsuario() == clientes.get(i).getUsuario().getCodUsuario()) {
+				if (user.getCodUsuario() == clientes.get(i).getCodUsuario()) {
 					cliente = clientes.get(i);
 
 				}
@@ -173,14 +173,14 @@ public class LoginBean {
 
 				for (int i = 0; i < funcionarios.size(); i++) {
 
-					if (user.getCodUsuario() == funcionarios.get(i).getUsuario().getCodUsuario()) {
+					if (user.getCodUsuario() == funcionarios.get(i).getCodUsuario()) {
 						funcionario = funcionarios.get(i);
 					}
 				}
 				if (funcionario.getFuncao().equalsIgnoreCase("Gerente")) {
 
 					for (Menu menu : lista) {
-						if (menu.getCaminho() == null && !menu.getRotulo().equalsIgnoreCase("Fazer Pedido")) {
+						if (menu.getCaminho() == null && !menu.getRotulo().equalsIgnoreCase("Pedidos")) {
 
 							DefaultSubMenu subMenu = new DefaultSubMenu(menu.getRotulo());
 
@@ -200,7 +200,7 @@ public class LoginBean {
 
 					for (Menu menu : lista) {
 						if (menu.getCaminho() == null && !menu.getRotulo().equalsIgnoreCase("Cadastros")
-								&& !menu.getRotulo().equalsIgnoreCase("Fazer Pedido")) {
+								&& !menu.getRotulo().equalsIgnoreCase("Pedidos")) {
 
 							DefaultSubMenu subMenu = new DefaultSubMenu(menu.getRotulo());
 
@@ -225,22 +225,6 @@ public class LoginBean {
 			Messages.addGlobalError(erro.getMessage());
 		}
 
-	}
-
-	public void autenticarPrimeiroLogin() {
-		try {
-			UsuarioDAO usuarioDAO = new UsuarioDAO();
-			usuarioLogado = usuarioDAO.autenticar(usuario.getEmail(), usuario.getSenha());
-			if (usuarioLogado == null) {
-				Messages.addGlobalError("E-mail e/ou senha incorretos");
-				return;
-			}
-			Faces.redirect("./pages/cliente1.xhtml");
-
-		} catch (IOException erro) {
-			erro.printStackTrace();
-			Messages.addGlobalError(erro.getMessage());
-		}
 	}
 	
 	public void deslogar() throws IOException{
