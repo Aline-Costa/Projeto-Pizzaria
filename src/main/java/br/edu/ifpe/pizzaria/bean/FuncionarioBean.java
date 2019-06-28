@@ -68,11 +68,16 @@ public class FuncionarioBean implements Serializable {
 	public void salvar() {
 		try {
 			FuncionarioDAO funcionarioDao = new FuncionarioDAO();
-			funcionarioDao.merge(funcionario);
+			if (validaEmail(funcionario.getEmail())) {
+				Messages.addFlashGlobalError("E-mail digitado já está cadastrado no sistema!");
+			} else {
 
-			novo();
-			funcionarios = funcionarioDao.listar();
-			Messages.addGlobalInfo("Funcionário salvo com sucesso!");
+				funcionarioDao.merge(funcionario);
+
+				novo();
+				funcionarios = funcionarioDao.listar();
+				Messages.addGlobalInfo("Funcionário salvo com sucesso!");
+			}
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao salvar o funcionário!");
 			erro.printStackTrace();
@@ -115,6 +120,19 @@ public class FuncionarioBean implements Serializable {
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		usuarios = usuarioDAO.listar();
 
+	}
+
+	public boolean validaEmail(String email) {
+
+		FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+		funcionarios = funcionarioDAO.listar();
+
+		for (int i = 0; i < funcionarios.size(); i++) {
+
+			if (funcionarios.get(i).getEmail().equalsIgnoreCase(email))
+				return true;
+		}
+		return false;
 	}
 
 }

@@ -13,6 +13,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+@SuppressWarnings("serial")
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "usuario")

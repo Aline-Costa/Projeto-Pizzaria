@@ -57,7 +57,7 @@ public class ClienteBean implements Serializable {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
+
 	public Usuario getUsuarioLog() {
 		return usuarioLog;
 	}
@@ -96,11 +96,15 @@ public class ClienteBean implements Serializable {
 	public void salvar() {
 		try {
 			ClienteDAO clienteDao = new ClienteDAO();
-			clienteDao.merge(cliente);
+			if (validaEmail(cliente.getEmail())) {
+				Messages.addFlashGlobalError("E-mail digitado já está cadastrado no sistema!");
+			} else {
+				clienteDao.merge(cliente);
 
-			novo();
-			clientes = clienteDao.listar();
-			Messages.addGlobalInfo("Cadastro realizado com sucesso! Faça seu login!");
+				novo();
+				clientes = clienteDao.listar();
+				Messages.addGlobalInfo("Cadastro realizado com sucesso! Faça seu login!");
+			}
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao salvar o cliente!");
 			erro.printStackTrace();
@@ -142,6 +146,20 @@ public class ClienteBean implements Serializable {
 
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		usuarios = usuarioDAO.listar();
-		
+
 	}
+
+	public boolean validaEmail(String email) {
+
+		ClienteDAO clienteDAO = new ClienteDAO();
+		clientes = clienteDAO.listar();
+
+		for (int i = 0; i < clientes.size(); i++) {
+
+			if (clientes.get(i).getEmail().equalsIgnoreCase(email))
+				return true;
+		}
+		return false;
+	}
+
 }

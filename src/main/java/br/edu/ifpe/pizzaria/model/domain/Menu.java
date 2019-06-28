@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+@SuppressWarnings("serial")
 @Entity
 public class Menu implements Serializable{
 	

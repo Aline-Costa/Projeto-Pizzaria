@@ -116,7 +116,7 @@ public class LoginBean {
 
 	public void autenticarUsuario() {
 		try {
-		
+
 			MenuDAO menuDAO = new MenuDAO();
 			List<Menu> lista = menuDAO.listar();
 			modeloMenu = new DefaultMenuModel();
@@ -127,80 +127,29 @@ public class LoginBean {
 			if (usuarioLogado == null) {
 				Messages.addGlobalError("E-mail e/ou senha incorretos");
 
-			}
-			
-			FacesContext context = FacesContext.getCurrentInstance();
-			primeiroNome = usuarioLogado.getNome().split(" ")[0];
+			} else {
 
-			ClienteDAO clienteDAO = new ClienteDAO();
-			clientes = clienteDAO.listar();
+				@SuppressWarnings("unused")
+				FacesContext context = FacesContext.getCurrentInstance();
+				primeiroNome = usuarioLogado.getNome().split(" ")[0];
 
-			user = usuarioDAO.buscarPorCodigo(usuarioLogado.getCodUsuario());
+				ClienteDAO clienteDAO = new ClienteDAO();
+				clientes = clienteDAO.listar();
 
-			for (int i = 0; i < clientes.size(); i++) {
+				user = usuarioDAO.buscarPorCodigo(usuarioLogado.getCodUsuario());
 
-				if (user.getCodUsuario() == clientes.get(i).getCodUsuario()) {
-					cliente = clientes.get(i);
+				for (int i = 0; i < clientes.size(); i++) {
 
-				}
-			}
-			if (cliente != null) {
+					if (user.getCodUsuario() == clientes.get(i).getCodUsuario()) {
+						cliente = clientes.get(i);
 
-				for (Menu menu : lista) {
-					if (menu.getCaminho() == null && !menu.getRotulo().equalsIgnoreCase("Cadastros")
-							&& !menu.getRotulo().equalsIgnoreCase("Movimentações")) {
-
-						DefaultSubMenu subMenu = new DefaultSubMenu(menu.getRotulo());
-
-						for (Menu item : menu.getMenus()) {
-
-							DefaultMenuItem menuItem = new DefaultMenuItem(item.getRotulo());
-							menuItem.setUrl(item.getCaminho());
-
-							subMenu.addElement(menuItem);
-						}
-						modeloMenu.addElement(subMenu);
-					}
-					
-				}
-				
-			}
-
-			if (cliente == null) {
-
-				FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-				funcionarios = funcionarioDAO.listar();
-
-				for (int i = 0; i < funcionarios.size(); i++) {
-
-					if (user.getCodUsuario() == funcionarios.get(i).getCodUsuario()) {
-						funcionario = funcionarios.get(i);
 					}
 				}
-				if (funcionario.getFuncao().equalsIgnoreCase("Gerente")) {
-
-					for (Menu menu : lista) {
-						if (menu.getCaminho() == null && !menu.getRotulo().equalsIgnoreCase("Pedidos")) {
-
-							DefaultSubMenu subMenu = new DefaultSubMenu(menu.getRotulo());
-
-							for (Menu item : menu.getMenus()) {
-
-								DefaultMenuItem menuItem = new DefaultMenuItem(item.getRotulo());
-								menuItem.setUrl(item.getCaminho());
-
-								subMenu.addElement(menuItem);
-							}
-							modeloMenu.addElement(subMenu);
-						}
-					}
-				}
-
-				if (funcionario.getFuncao().equalsIgnoreCase("Atendente")) {
+				if (cliente != null) {
 
 					for (Menu menu : lista) {
 						if (menu.getCaminho() == null && !menu.getRotulo().equalsIgnoreCase("Cadastros")
-								&& !menu.getRotulo().equalsIgnoreCase("Pedidos")) {
+								&& !menu.getRotulo().equalsIgnoreCase("Movimentações")) {
 
 							DefaultSubMenu subMenu = new DefaultSubMenu(menu.getRotulo());
 
@@ -213,23 +162,75 @@ public class LoginBean {
 							}
 							modeloMenu.addElement(subMenu);
 						}
+
 					}
+
 				}
 
+				if (cliente == null) {
+
+					FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+					funcionarios = funcionarioDAO.listar();
+
+					for (int i = 0; i < funcionarios.size(); i++) {
+
+						if (user.getCodUsuario() == funcionarios.get(i).getCodUsuario()) {
+							funcionario = funcionarios.get(i);
+						}
+					}
+					if (funcionario.getFuncao().equalsIgnoreCase("Gerente")) {
+
+						for (Menu menu : lista) {
+							if (menu.getCaminho() == null && !menu.getRotulo().equalsIgnoreCase("Pedidos")) {
+
+								DefaultSubMenu subMenu = new DefaultSubMenu(menu.getRotulo());
+
+								for (Menu item : menu.getMenus()) {
+
+									DefaultMenuItem menuItem = new DefaultMenuItem(item.getRotulo());
+									menuItem.setUrl(item.getCaminho());
+
+									subMenu.addElement(menuItem);
+								}
+								modeloMenu.addElement(subMenu);
+							}
+						}
+					}
+
+					if (funcionario.getFuncao().equalsIgnoreCase("Atendente")) {
+
+						for (Menu menu : lista) {
+							if (menu.getCaminho() == null && !menu.getRotulo().equalsIgnoreCase("Cadastros")
+									&& !menu.getRotulo().equalsIgnoreCase("Pedidos")) {
+
+								DefaultSubMenu subMenu = new DefaultSubMenu(menu.getRotulo());
+
+								for (Menu item : menu.getMenus()) {
+
+									DefaultMenuItem menuItem = new DefaultMenuItem(item.getRotulo());
+									menuItem.setUrl(item.getCaminho());
+
+									subMenu.addElement(menuItem);
+								}
+								modeloMenu.addElement(subMenu);
+							}
+						}
+					}
+
+				}
+
+				Faces.redirect("./pages/principal.xhtml");
 			}
-
-			Faces.redirect("./pages/principal.xhtml");
-
 		} catch (IOException erro) {
 			erro.printStackTrace();
 			Messages.addGlobalError(erro.getMessage());
 		}
 
 	}
-	
-	public void deslogar() throws IOException{
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        Faces.redirect("./pages/login.xhtml");
-    }
+
+	public void deslogar() throws IOException {
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		Faces.redirect("./pages/login.xhtml");
+	}
 
 }

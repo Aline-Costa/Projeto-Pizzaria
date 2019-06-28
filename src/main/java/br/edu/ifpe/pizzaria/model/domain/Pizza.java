@@ -14,6 +14,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+@SuppressWarnings("serial")
 @Entity
 @NamedQueries({@NamedQuery(name = "Pizza.buscarPorCodigo", query = "SELECT pizza FROM Pizza pizza WHERE pizza.codPizza = :codPizza")})
 public class Pizza implements Serializable{
