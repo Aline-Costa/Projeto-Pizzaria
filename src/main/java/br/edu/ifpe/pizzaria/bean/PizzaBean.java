@@ -8,8 +8,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
-import org.omnifaces.util.Messages;
-import br.edu.ifpe.pizzaria.model.dao.PizzaDAO;
+
+import br.edu.ifpe.pizzaria.model.PizzaModel;
 import br.edu.ifpe.pizzaria.model.domain.Pizza;
 
 @SuppressWarnings({ "serial", "deprecation" })
@@ -38,15 +38,10 @@ public class PizzaBean implements Serializable {
 
 	@PostConstruct
 	public void listar() {
-		try {
 
-			PizzaDAO pizzaDao = new PizzaDAO();
-			pizzas = pizzaDao.listar();
+		PizzaModel pizzaModel = new PizzaModel();
+		pizzas = pizzaModel.listarPizza();
 
-		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Ocorreu um erro ao tentar listar as pizzas.");
-			erro.printStackTrace();
-		}
 	}
 
 	public void novo() {
@@ -55,47 +50,32 @@ public class PizzaBean implements Serializable {
 	}
 
 	public void salvar() {
-		try {
-			PizzaDAO pizzaDao = new PizzaDAO();
-			pizzaDao.merge(pizza);
 
-			novo();
-			pizzas = pizzaDao.listar();
-			Messages.addGlobalInfo("Pizza salva com sucesso!");
-		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Ocorreu um erro ao salvar a pizza!");
-			erro.printStackTrace();
-		}
+		PizzaModel pizzaModel = new PizzaModel();
+		pizzaModel.registrarPizza(pizza);
+
+		novo();
+		pizzas = pizzaModel.listarPizza();
+
 	}
 
 	public void excluir(ActionEvent evento) {
-		try {
-			pizza = (Pizza) evento.getComponent().getAttributes().get("pizzaSelecionada");
 
-			PizzaDAO pizzaDao = new PizzaDAO();
-			pizzaDao.excluir(pizza);
-			pizzas = pizzaDao.listar();
-			Messages.addGlobalInfo("Pizza excluída com sucesso!");
+		pizza = (Pizza) evento.getComponent().getAttributes().get("pizzaSelecionada");
 
-		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Ocorreu um erro ao excluir a pizza!");
-			erro.printStackTrace();
-		}
+		PizzaModel pizzaModel = new PizzaModel();
+		pizzaModel.removerPizza(pizza);
+		pizzas = pizzaModel.listarPizza();
+
 	}
 
 	public void editar(ActionEvent evento) {
 
-		try {
-			pizza = (Pizza) evento.getComponent().getAttributes().get("pizzaSelecionada");
+		pizza = (Pizza) evento.getComponent().getAttributes().get("pizzaSelecionada");
 
-			PizzaDAO pizzaDao = new PizzaDAO();
-			pizzaDao.editar(pizza);
-			pizzas = pizzaDao.listar();
-
-		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Ocorreu um erro ao editar a pizza!");
-			erro.printStackTrace();
-		}
+		PizzaModel pizzaModel = new PizzaModel();
+		pizzaModel.atualizarPizza(pizza);
+		pizzas = pizzaModel.listarPizza();
 
 	}
 

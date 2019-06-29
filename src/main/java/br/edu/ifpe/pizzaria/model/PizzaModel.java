@@ -1,7 +1,12 @@
 package br.edu.ifpe.pizzaria.model;
 
+import java.util.List;
+
+import org.omnifaces.util.Messages;
+
 import br.edu.ifpe.pizzaria.model.dao.DAO;
 import br.edu.ifpe.pizzaria.model.dao.GenericDAO;
+import br.edu.ifpe.pizzaria.model.dao.PizzaDAO;
 import br.edu.ifpe.pizzaria.model.domain.Pizza;
 
 public class PizzaModel {
@@ -11,12 +16,13 @@ public class PizzaModel {
 	public void registrarPizza(Pizza p) {
 		try {
 			if (p != null) {
-				dao.salvar(p);
-				System.out.println("Pizza salva com sucesso!.");
+				dao.merge(p);
+				Messages.addGlobalInfo("Pizza salva com sucesso!");
 			}
 
-		} catch (Exception e) {
-			System.out.println("Erro ao salvar pizza." + e);
+		} catch (RuntimeException erro) {
+			Messages.addFlashGlobalError("Ocorreu um erro ao salvar a pizza!");
+			erro.printStackTrace();
 		}
 	}
 
@@ -24,10 +30,12 @@ public class PizzaModel {
 		try {
 			if (p != null) {
 				dao.excluir(p);
-				System.out.println("Pizza excluída com sucesso!.");
+				Messages.addGlobalInfo("Pizza excluída com sucesso!");
+
 			}
-		} catch (Exception e) {
-			System.out.println("Erro ao remover pizza." + e);
+		} catch (RuntimeException erro) {
+			Messages.addFlashGlobalError("Ocorreu um erro ao excluir a pizza!");
+			erro.printStackTrace();
 		}
 	}
 
@@ -35,11 +43,21 @@ public class PizzaModel {
 		try {
 			if (p != null) {
 				dao.editar(p);
-				System.out.println("Pizza atualizada com sucesso!.");
+				Messages.addFlashGlobalError("Pizza atualizada com sucesso!.");
 			}
-		} catch (Exception e) {
-			System.out.println("Erro ao atualizar pizza." + e);
+		} catch (RuntimeException erro) {
+			Messages.addFlashGlobalError("Ocorreu um erro ao editar a pizza!");
+			erro.printStackTrace();
 		}
+
+	}
+
+	public List<Pizza> listarPizza() {
+
+		PizzaDAO pizzaDAO = new PizzaDAO();
+		List<Pizza> resultado = pizzaDAO.listar();
+
+		return resultado;
 	}
 
 }

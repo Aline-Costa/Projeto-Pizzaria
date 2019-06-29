@@ -7,9 +7,8 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
-import org.omnifaces.util.Messages;
 
-import br.edu.ifpe.pizzaria.model.dao.ClienteDAO;
+import br.edu.ifpe.pizzaria.model.ClienteModel;
 import br.edu.ifpe.pizzaria.model.dao.UsuarioDAO;
 import br.edu.ifpe.pizzaria.model.domain.Cliente;
 import br.edu.ifpe.pizzaria.model.domain.Usuario;
@@ -76,15 +75,10 @@ public class ClienteBean implements Serializable {
 
 	@PostConstruct
 	public void listar() {
-		try {
 
-			ClienteDAO clienteDao = new ClienteDAO();
-			clientes = clienteDao.listar();
+		ClienteModel clienteModel = new ClienteModel();
+		clientes = clienteModel.listarcliente();
 
-		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Ocorreu um erro ao tentar listar os clientes.");
-			erro.printStackTrace();
-		}
 	}
 
 	public void novo() {
@@ -94,51 +88,33 @@ public class ClienteBean implements Serializable {
 	}
 
 	public void salvar() {
-		try {
-			ClienteDAO clienteDao = new ClienteDAO();
-			if (validaEmail(cliente.getEmail())) {
-				Messages.addFlashGlobalError("E-mail digitado já está cadastrado no sistema!");
-			} else {
-				clienteDao.merge(cliente);
 
-				novo();
-				clientes = clienteDao.listar();
-				Messages.addGlobalInfo("Cadastro realizado com sucesso! Faça seu login!");
-			}
-		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Ocorreu um erro ao salvar o cliente!");
-			erro.printStackTrace();
-		}
+		ClienteModel clienteModel = new ClienteModel();
+
+		clienteModel.registrarCliente(cliente);
+
+		novo();
+		clientes = clienteModel.listarcliente();
+
 	}
 
 	public void excluir(ActionEvent evento) {
-		try {
-			cliente = (Cliente) evento.getComponent().getAttributes().get("clienteSelecionado");
 
-			ClienteDAO clienteDao = new ClienteDAO();
-			clienteDao.excluir(cliente);
-			clientes = clienteDao.listar();
-			Messages.addGlobalInfo("Cliente excluído com sucesso!");
+		cliente = (Cliente) evento.getComponent().getAttributes().get("clienteSelecionado");
 
-		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Ocorreu um erro ao excluir o cliente!");
-			erro.printStackTrace();
-		}
+		ClienteModel clienteModel = new ClienteModel();
+		clienteModel.removerCliente(cliente);
+		clientes = clienteModel.listarcliente();
+
 	}
 
 	public void editar(ActionEvent evento) {
 
-		try {
-			cliente = (Cliente) evento.getComponent().getAttributes().get("clienteSelecionado");
+		cliente = (Cliente) evento.getComponent().getAttributes().get("clienteSelecionado");
 
-			ClienteDAO clienteDao = new ClienteDAO();
-			clienteDao.editar(cliente);
-			clientes = clienteDao.listar();
-
-		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Ocorreu um erro ao editar o cliente!");
-			erro.printStackTrace();
-		}
+		ClienteModel clienteModel = new ClienteModel();
+		clienteModel.atualizarCliente(cliente);
+		clientes = clienteModel.listarcliente();
 
 	}
 
@@ -147,19 +123,6 @@ public class ClienteBean implements Serializable {
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		usuarios = usuarioDAO.listar();
 
-	}
-
-	public boolean validaEmail(String email) {
-
-		ClienteDAO clienteDAO = new ClienteDAO();
-		clientes = clienteDAO.listar();
-
-		for (int i = 0; i < clientes.size(); i++) {
-
-			if (clientes.get(i).getEmail().equalsIgnoreCase(email))
-				return true;
-		}
-		return false;
 	}
 
 }

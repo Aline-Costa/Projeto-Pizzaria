@@ -8,8 +8,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
-import org.omnifaces.util.Messages;
-import br.edu.ifpe.pizzaria.model.dao.BebidaDAO;
+
+import br.edu.ifpe.pizzaria.model.BebidaModel;
 import br.edu.ifpe.pizzaria.model.domain.Bebida;
 
 @SuppressWarnings({ "serial", "deprecation" })
@@ -38,15 +38,10 @@ public class BebidaBean implements Serializable {
 
 	@PostConstruct
 	public void listar() {
-		try {
 
-			BebidaDAO bebidaDao = new BebidaDAO();
-			bebidas = bebidaDao.listar();
+		BebidaModel bebidaModel = new BebidaModel();
+		bebidas = bebidaModel.listarBebida();
 
-		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Ocorreu um erro ao tentar listar as bebidas.");
-			erro.printStackTrace();
-		}
 	}
 
 	public void novo() {
@@ -55,47 +50,32 @@ public class BebidaBean implements Serializable {
 	}
 
 	public void salvar() {
-		try {
-			BebidaDAO bebidaDao = new BebidaDAO();
-			bebidaDao.merge(bebida);
 
-			novo();
-			bebidas = bebidaDao.listar();
-			Messages.addGlobalInfo("Bebida salva com sucesso!");
-		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Ocorreu um erro ao salvar a bebida!");
-			erro.printStackTrace();
-		}
+		BebidaModel bebidaModel = new BebidaModel();
+		bebidaModel.registrarBebida(bebida);
+
+		novo();
+		bebidas = bebidaModel.listarBebida();
+
 	}
 
 	public void excluir(ActionEvent evento) {
-		try {
-			bebida = (Bebida) evento.getComponent().getAttributes().get("bebidaSelecionada");
 
-			BebidaDAO bebidaDao = new BebidaDAO();
-			bebidaDao.excluir(bebida);
-			bebidas = bebidaDao.listar();
-			Messages.addGlobalInfo("Bebida excluída com sucesso!");
+		bebida = (Bebida) evento.getComponent().getAttributes().get("bebidaSelecionada");
 
-		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Ocorreu um erro ao excluir a bebida!");
-			erro.printStackTrace();
-		}
+		BebidaModel bebidaModel = new BebidaModel();
+		bebidaModel.removerBebida(bebida);
+		bebidas = bebidaModel.listarBebida();
+
 	}
 
 	public void editar(ActionEvent evento) {
 
-		try {
-			bebida = (Bebida) evento.getComponent().getAttributes().get("bebidaSelecionada");
+		bebida = (Bebida) evento.getComponent().getAttributes().get("bebidaSelecionada");
 
-			BebidaDAO bebidaDAO = new BebidaDAO();
-			bebidaDAO.editar(bebida);
-			bebidas = bebidaDAO.listar();
-
-		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Ocorreu um erro ao editar a bebida!");
-			erro.printStackTrace();
-		}
+		BebidaModel bebidaModel = new BebidaModel();
+		bebidaModel.atualizarBebida(bebida);
+		bebidas = bebidaModel.listarBebida();
 
 	}
 }
